@@ -30,7 +30,7 @@ var barnowl = require('barnowl');
 var notifications = new barnacles();
 var middleware = new barnowl();
 
-middleware.bind( { protocol: 'udp', path: '192.168.1.101:50000' } ); // See barnowl
+middleware.bind( { protocol: 'test', path: 'default' } ); // See barnowl
 
 notifications.bind({ barnowl: middleware });
 
@@ -50,11 +50,13 @@ notifications.on('disappearance', function(tiraid) {
 });
 ```
 
-When the above code is run with a valid (and active) data stream as input to barnowl, you should see output to the console similar to the following:
+When the above code is run, you should see output to the console similar to the following:
 
     001bc50940100000 has appeared on 001bc50940800000
+    fee150bada55 has appeared on 001bc50940810000
     001bc50940100000 has displaced to 001bc50940800001
-    001bc50940100000 has disappeared from 001bc50940800001
+    fee150bada55 has displaced to 001bc50940810001
+    ...
 
 
 Options
