@@ -2,12 +2,12 @@
   "name": "barnacles",
   "homepage": "https://github.com/reelyactive/barnacles/",
   "author": "reelyActive <webdev@reelyactive.com>",
-  "description": "Detects events and sends notifications.  We believe in an open Internet of Things.",
+  "description": "Detects location-based events and sends notifications.  We believe in an open Internet of Things.",
   "keywords": [
     "reelyActive",
     "IoT"
   ],
-  "version": "0.0.0",
+  "version": "0.0.1",
   "engines": {
     "node": "^0.10.0"
   },
@@ -26,5 +26,8 @@
   "bugs": {
     "url": "https://github.com/reelyactive/barnacles/issues"
   },
+  "contributors": [
+    { "name": "Jeffrey Dungen" }
+  ],
   "license": "MIT"
 }
