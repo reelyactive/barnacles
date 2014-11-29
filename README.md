@@ -59,6 +59,45 @@ When the above code is run, you should see output to the console similar to the 
     ...
 
 
+Querying the current state
+--------------------------
+
+It is possible to query the current state of barnacles.  Currently only one query is supported, and this query is based on the identifier values of either wireless transmitters and/or receivers.  For example, the following query would be suitable for the Hello barnacles & barnowl example above.
+
+```javascript
+notifications.getState( { ids: ["001bc50940100000", "001bc50940800000"] },
+                        function(state) { console.log(state) } );
+```
+
+This query would return via the callback all current events which have one of the given ids as either:
+- their own identifier value
+- the identifier value of one of their decoders
+
+In the latter case, the radio decodings of the event are omitted from the results.  The results of the above query would resemble the following:
+
+    {
+      "001bc50940100000": {
+        "identifier": {
+          "type": "EUI-64",
+          "value": "001bc50940100000",
+          "flags": {
+            "transmissionCount": 0
+          }
+        },
+        "timestamp": "2014-01-01T12:34:56.789Z",
+        "radioDecodings": [
+          {
+            "rssi": 135,
+            "identifier": {
+              "type": "EUI-64",
+              "value": "001bc50940800001"
+            }
+          }
+        ]
+      }
+    }
+
+
 Options
 -------
 
