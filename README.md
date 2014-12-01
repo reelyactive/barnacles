@@ -98,6 +98,30 @@ In the latter case, the radio decodings of the event are omitted from the result
     }
 
 
+Connecting with services
+------------------------
+
+It is possible to connect different services such that they receive the notifications via their API.  The following services are supported:
+
+__Google Universal Analytics__
+
+barnacles can send notifications to [Google's Universal Analytics platform](http://www.google.ca/analytics/) such that a wireless device being detected by a sensor is analagous to a user hitting a webpage.  In other words, imagine a physical location as a website, and the "invisible buttons" are webpages.  A wireless device moving through that space triggering invisible buttons is equivalent to a user browsing a website.  And it's all possible in one line of code:
+
+```javascript
+notifications.addService( { service: "google",
+                            hostname: "http://hlc-server.url",
+                            accountId: "UA-XXXXXXXX-X" } );
+```
+ 
+The optional _hostname_ can be used to specify the URL of an hlc-server instance.  This could be useful if you want to collect both physical and online "hits" of the same resource.  The _accountId_ is provided by Google when you set up Google Analytics Reporting.
+
+The pageview path is recorded as /id/receiverID where the receiverID would for instance be 001bc50940800001.  Each wireless device is given a UUID and CID based on its identifier which allows tracking so long as the identifier does not change.
+
+Note that you'll first need to manually install the universal-analytics package for this service:
+
+    npm install universal-analytics
+
+
 Options
 -------
 
