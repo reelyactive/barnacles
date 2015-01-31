@@ -2,12 +2,12 @@
   "name": "barnacles",
   "homepage": "https://github.com/reelyactive/barnacles/",
   "author": "reelyActive <webdev@reelyactive.com>",
-  "description": "Detects location-based events and sends notifications.  We believe in an open Internet of Things.",
+  "description": "Efficiently captures and propagates location-based events based on wireless transmissions.  We believe in an open Internet of Things.",
   "keywords": [
     "reelyActive",
     "IoT"
   ],
-  "version": "0.0.7",
+  "version": "0.0.8",
   "engines": {
     "node": "^0.10.0"
   },
@@ -20,7 +20,8 @@
     "url": "https://github.com/reelyactive/barnacles.git"
   },
   "dependencies": {
-    "nedb": ">=1.1.1"
+    "nedb": ">=1.1.1",
+    "universal-analytics": ">=0.3.6"
   },
   "devDependencies": {},
   "bugs": {
