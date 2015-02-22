@@ -98,6 +98,26 @@ In the latter case, the radio decodings of the event are omitted from the result
     }
 
 
+Querying real-time statistics
+-----------------------------
+
+It is possible to query the latest real-time statistics as follows:
+
+```javascript
+notifications.getStatistics();
+```
+
+This query will return the following:
+
+    { devices: 0,
+      tiraids: 0,
+      appearances: 0,
+      displacements: 0,
+      disappearances: 0 }
+
+where _devices_ is the number of devices in the current state and all other values are the average number of events per second in the last statistics period.
+
+
 Connecting with services
 ------------------------
 
