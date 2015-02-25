@@ -20,7 +20,9 @@
     "url": "https://github.com/reelyactive/barnacles.git"
   },
   "dependencies": {
+    "express": ">=4.0.0",
     "nedb": ">=1.1.1",
+    "body-parser": ">=1.8.0",
     "universal-analytics": ">=0.3.6"
   },
   "devDependencies": {},
