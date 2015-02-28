@@ -97,6 +97,34 @@ In the latter case, the radio decodings of the event are omitted from the result
       }
     }
 
+RESTful interactions
+--------------------
+
+__GET /statistics__
+
+Retrieve the latest real-time statistics.  The response will be as follows:
+
+    {
+      "_meta": {
+        "message": "ok",
+        "statusCode": 200
+      },
+      "_links": {
+        "self": {
+          "href": "http://localhost:3005/statistics"
+        }
+      },
+      "statistics": {
+        "devices": 2,
+        "tiraids": 2,
+        "appearances": 0,
+        "displacements": 0,
+        "disappearances": 0
+      }
+    }
+
+where _devices_ is the number of devices in the current state and all other values are the average number of events per second in the last statistics period.
+
 
 Querying real-time statistics
 -----------------------------
@@ -137,10 +165,6 @@ The optional _hostname_ can be used to specify the URL of an hlc-server instance
 
 The pageview path is recorded as /id/receiverID where the receiverID would for instance be 001bc50940800001.  Each wireless device is given a UUID and CID based on its identifier which allows tracking so long as the identifier does not change.
 
-Note that you'll first need to manually install the universal-analytics package for this service:
-
-    npm install universal-analytics
-
 
 Options
 -------
@@ -148,6 +172,7 @@ Options
 The following options are supported when instantiating barnacles (those shown are the defaults):
 
     {
+      httpPort: 3005,
       disappearanceMilliseconds: 10000
     }
 
