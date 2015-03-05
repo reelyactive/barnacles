@@ -158,10 +158,11 @@ barnacles can send notifications to [Google's Universal Analytics platform](http
 ```javascript
 notifications.addService( { service: "google",
                             hostname: "http://hlc-server.url",
-                            accountId: "UA-XXXXXXXX-X" } );
+                            accountId: "UA-XXXXXXXX-X",
+                            whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
 ```
  
-The optional _hostname_ can be used to specify the URL of an hlc-server instance.  This could be useful if you want to collect both physical and online "hits" of the same resource.  The _accountId_ is provided by Google when you set up Google Analytics Reporting.
+The optional _hostname_ can be used to specify the URL of an hlc-server instance.  This could be useful if you want to collect both physical and online "hits" of the same resource.  The _accountId_ is provided by Google when you set up Google Analytics Reporting.  The optional _whitelist_ limits the notifications to those with tiraids containing one or more of the given receiver ids.
 
 The pageview path is recorded as /id/receiverID where the receiverID would for instance be 001bc50940800001.  Each wireless device is given a UUID and CID based on its identifier which allows tracking so long as the identifier does not change.
 
@@ -191,7 +192,7 @@ License
 
 MIT License
 
-Copyright (c) 2014 reelyActive
+Copyright (c) 2014-2015 reelyActive
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
