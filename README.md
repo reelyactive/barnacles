@@ -97,6 +97,54 @@ In the latter case, the radio decodings of the event are omitted from the result
       }
     }
 
+RESTful interactions
+--------------------
+
+__GET /statistics__
+
+Retrieve the latest real-time statistics.  The response will be as follows:
+
+    {
+      "_meta": {
+        "message": "ok",
+        "statusCode": 200
+      },
+      "_links": {
+        "self": {
+          "href": "http://localhost:3005/statistics"
+        }
+      },
+      "statistics": {
+        "devices": 2,
+        "tiraids": 2,
+        "appearances": 0,
+        "displacements": 0,
+        "disappearances": 0
+      }
+    }
+
+where _devices_ is the number of devices in the current state and all other values are the average number of events per second in the last statistics period.
+
+
+Querying real-time statistics
+-----------------------------
+
+It is possible to query the latest real-time statistics as follows:
+
+```javascript
+notifications.getStatistics();
+```
+
+This query will return the following:
+
+    { devices: 0,
+      tiraids: 0,
+      appearances: 0,
+      displacements: 0,
+      disappearances: 0 }
+
+where _devices_ is the number of devices in the current state and all other values are the average number of events per second in the last statistics period.
+
 
 Connecting with services
 ------------------------
@@ -110,16 +158,13 @@ barnacles can send notifications to [Google's Universal Analytics platform](http
 ```javascript
 notifications.addService( { service: "google",
                             hostname: "http://hlc-server.url",
-                            accountId: "UA-XXXXXXXX-X" } );
+                            accountId: "UA-XXXXXXXX-X",
+                            whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
 ```
  
-The optional _hostname_ can be used to specify the URL of an hlc-server instance.  This could be useful if you want to collect both physical and online "hits" of the same resource.  The _accountId_ is provided by Google when you set up Google Analytics Reporting.
+The optional _hostname_ can be used to specify the URL of an hlc-server instance.  This could be useful if you want to collect both physical and online "hits" of the same resource.  The _accountId_ is provided by Google when you set up Google Analytics Reporting.  The optional _whitelist_ limits the notifications to those with tiraids containing one or more of the given receiver ids.
 
 The pageview path is recorded as /id/receiverID where the receiverID would for instance be 001bc50940800001.  Each wireless device is given a UUID and CID based on its identifier which allows tracking so long as the identifier does not change.
-
-Note that you'll first need to manually install the universal-analytics package for this service:
-
-    npm install universal-analytics
 
 
 Options
@@ -128,6 +173,7 @@ Options
 The following options are supported when instantiating barnacles (those shown are the defaults):
 
     {
+      httpPort: 3005,
       disappearanceMilliseconds: 10000
     }
 
@@ -146,7 +192,7 @@ License
 
 MIT License
 
-Copyright (c) 2014 reelyActive
+Copyright (c) 2014-2015 reelyActive
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
