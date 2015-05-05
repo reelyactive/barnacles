@@ -67,40 +67,89 @@ When the above code is run, you should see output to the console similar to the 
 Querying the current state
 --------------------------
 
-It is possible to query the current state of barnacles.  Currently only one query is supported, and this query is based on the identifier values of either wireless transmitters and/or receivers.  For example, the following query would be suitable for the Hello barnacles & barnowl example above.
+It is possible to query the current state of barnacles.  There are the following three query options:
+- "transmittedBy" returns the transmissions by the devices with the given ids
+- "decodedBy" returns everything decoded by the devices with the given ids
+- "decodedBySame" returns everything decoded by the devices which decoded the given ids the strongest
+
+For example, based on the Hello barnacles & barnowl example above, the following would query the most recent _transmission_ by device 001bc50940100000:
 
 ```javascript
-notifications.getState( { ids: ["001bc50940100000", "001bc50940800000"] },
-                        function(state) { console.log(state) } );
+var options = { query: "transmittedBy",
+                ids: ["001bc50940100000"] };
+notifications.getState(options, function(state) { console.log(state) } );
 ```
 
-This query would return via the callback all current events which have one of the given ids as either:
-- their own identifier value
-- the identifier value of one of their decoders
-
-In the latter case, the radio decodings of the event are omitted from the results.  The results of the above query would resemble the following:
+The results of the above query might resemble the following:
 
     {
-      "001bc50940100000": {
-        "identifier": {
-          "type": "EUI-64",
-          "value": "001bc50940100000",
-          "flags": {
-            "transmissionCount": 0
-          }
-        },
-        "timestamp": "2014-01-01T12:34:56.789Z",
-        "radioDecodings": [
-          {
-            "rssi": 135,
-            "identifier": {
-              "type": "EUI-64",
-              "value": "001bc50940800001"
+      "devices": {
+        "001bc50940100000": {
+          "identifier": {
+            "type": "EUI-64",
+            "value": "001bc50940100000",
+            "flags": {
+              "transmissionCount": 0
             }
-          }
-        ]
+          },
+          "timestamp": "2014-01-01T12:34:56.789Z",
+          "radioDecodings": [
+            {
+              "rssi": 135,
+              "identifier": {
+                "type": "EUI-64",
+                "value": "001bc50940800000"
+              }
+            }
+          ]
+        }
       }
     }
+
+It is possible to include an _omit_ option if either the timestamp, radioDecodings and/or identifier of the tiraid are not required.  For example to query which devices are _decoded_ by devices 001bc50940800000 and 001bc50940810000, omitting their timestamp and radioDecodings:
+
+```javascript
+var options = { query: "decodedBy",
+                ids: ["001bc50940800000", "001bc50940810000"],
+                omit: ["timestamp", "radioDecodings"] };
+notifications.getState(options, function(state) { console.log(state) } );
+```
+
+The results of the above query might resemble the following:
+
+    {
+      "devices": {
+        "001bc50940100000": {
+          "identifier": {
+            "type": "EUI-64",
+            "value": "001bc50940100000",
+            "flags": {
+              "transmissionCount": 0
+            }
+          }
+        },
+        "fee150bada55": {
+          "identifier": {
+            "type": "ADVA-48",
+            "value": "fee150bada55",
+            "advHeader": {
+              "type": "ADV_NONCONNECT_IND",
+              "length": 22,
+              "txAdd": "random",
+              "rxAdd": "public"
+            },
+            "advData": {
+              "flags": [
+                "LE Limited Discoverable Mode",
+                "BR/EDR Not Supported"
+              ],
+              "completeLocalName": "reelyActive"
+            }
+          }
+        }
+      }
+    }
+
 
 RESTful interactions
 --------------------
