@@ -48,6 +48,11 @@ notifications.on('disappearance', function(tiraid) {
   console.log(tiraid.identifier.value + " has disappeared from "
               + tiraid.radioDecodings[0].identifier.value);
 });
+
+notifications.on('keep-alive', function(tiraid) {
+  console.log(tiraid.identifier.value + " remains at "
+              + tiraid.radioDecodings[0].identifier.value);
+});
 ```
 
 When the above code is run, you should see output to the console similar to the following:
@@ -174,7 +179,8 @@ The following options are supported when instantiating barnacles (those shown ar
 
     {
       httpPort: 3005,
-      disappearanceMilliseconds: 10000
+      disappearanceMilliseconds: 10000,
+      keepAliveMilliseconds: 5000
     }
 
 Notes:
