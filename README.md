@@ -69,8 +69,8 @@ Querying the current state
 
 It is possible to query the current state of barnacles.  There are the following three query options:
 - "transmittedBy" returns the transmissions by the devices with the given ids
-- "decodedBy" returns everything decoded by the devices with the given ids
-- "decodedBySame" returns everything decoded by the devices which decoded the given ids the strongest
+- "receivedBy" returns every transmission received by the devices with the given ids
+- "receivedBySame" returns every transmission received by the same devices which decoded the given ids with the strongest RSSI
 
 For example, based on the Hello barnacles & barnowl example above, the following would query the most recent _transmission_ by device 001bc50940100000:
 
@@ -106,10 +106,10 @@ The results of the above query might resemble the following:
       }
     }
 
-It is possible to include an _omit_ option if either the timestamp, radioDecodings and/or identifier of the tiraid are not required.  For example to query which devices are _decoded_ by devices 001bc50940800000 and 001bc50940810000, omitting their timestamp and radioDecodings:
+It is possible to include an _omit_ option if either the timestamp, radioDecodings and/or identifier of the tiraid are not required.  For example to query which device transmissions are _received_ by devices 001bc50940800000 and 001bc50940810000, omitting their timestamp and radioDecodings:
 
 ```javascript
-var options = { query: "decodedBy",
+var options = { query: "receivedBy",
                 ids: ["001bc50940800000", "001bc50940810000"],
                 omit: ["timestamp", "radioDecodings"] };
 notifications.getState(options, function(state) { console.log(state) } );
