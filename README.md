@@ -64,6 +64,82 @@ When the above code is run, you should see output to the console similar to the 
     ...
 
 
+RESTful interactions
+--------------------
+
+Include _Content-Type: application/json_ in the header of all interactions in which JSON is sent to barnacles.
+
+__GET /statistics__
+
+Retrieve the latest real-time statistics.  The response will be as follows:
+
+    {
+      "_meta": {
+        "message": "ok",
+        "statusCode": 200
+      },
+      "_links": {
+        "self": {
+          "href": "http://localhost:3005/statistics"
+        }
+      },
+      "statistics": {
+        "devices": 2,
+        "tiraids": 2,
+        "appearances": 0,
+        "displacements": 0,
+        "disappearances": 0
+      }
+    }
+
+where _devices_ is the number of devices in the current state and all other values are the average number of events per second in the last statistics period.
+
+__POST /events__
+
+Create an event.  This includes a tiraid and an event type, the latter being one of the following:
+- appearance
+- displacement
+- disappearance
+- keep-alive
+
+For instance, an _appearance_ of transmitting device id _2c0ffeeb4bed_ on receiving device id _001bc50940810000_ would be created with a POST /events including the following JSON:
+
+    { 
+      "event": "appearance", 
+      "tiraid":{
+        "identifier":{
+          "type":"ADVA-48",
+          "value":"2c0ffeeb4bed",
+          "txAdd": "public"
+        },
+        "timestamp":"2015-01-01T01:23:45.678Z",
+        "radioDecodings":[
+          {
+            "rssi": 161,
+            "identifier": {
+              "type": "EUI-64",
+              "value": "001bc50940810000"
+            }
+          }
+        ]
+      }
+    }
+
+A successful response would be as follows:
+
+    {
+      "_meta": {
+        "message": "ok",
+        "statusCode": 200
+      },
+      "_links": {
+        "self": {
+          "href": "http://localhost:3005/events"
+        }
+      }
+    }
+
+
 Querying the current state
 --------------------------
 
@@ -149,35 +225,6 @@ The results of the above query might resemble the following:
         }
       }
     }
-
-
-RESTful interactions
---------------------
-
-__GET /statistics__
-
-Retrieve the latest real-time statistics.  The response will be as follows:
-
-    {
-      "_meta": {
-        "message": "ok",
-        "statusCode": 200
-      },
-      "_links": {
-        "self": {
-          "href": "http://localhost:3005/statistics"
-        }
-      },
-      "statistics": {
-        "devices": 2,
-        "tiraids": 2,
-        "appearances": 0,
-        "displacements": 0,
-        "disappearances": 0
-      }
-    }
-
-where _devices_ is the number of devices in the current state and all other values are the average number of events per second in the last statistics period.
 
 
 Querying real-time statistics
