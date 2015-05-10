@@ -106,16 +106,22 @@ For instance, an _appearance_ of transmitting device id _2c0ffeeb4bed_ on receiv
 
     { 
       "event": "appearance", 
-      "tiraid":{
-        "identifier":{
-          "type":"ADVA-48",
-          "value":"2c0ffeeb4bed",
-          "txAdd": "public"
+      "tiraid": {
+        "identifier": {
+          "type": "ADVA-48",
+          "value": "2c0ffeeb4bed",
+          "advHeader": {
+            "type": "SCAN_REQ",
+            "length": 12,
+            "txAdd": "public",
+            "rxAdd": "public"
+          },
+          "advData": {}
         },
-        "timestamp":"2015-01-01T01:23:45.678Z",
-        "radioDecodings":[
+        "timestamp": "2015-01-01T01:23:45.678Z",
+        "radioDecodings": [
           {
-            "rssi": 161,
+            "rssi": 169,
             "identifier": {
               "type": "EUI-64",
               "value": "001bc50940810000"
