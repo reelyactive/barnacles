@@ -2,14 +2,20 @@ barnacles
 =========
 
 
+A real-time location & sensor data aggregator for the IoT
+---------------------------------------------------------
+
+barnacles consume spatio-temporal data concerning wireless devices and emit notification events based on changes such as appearances, displacements and disappearances.  barnacles collect this real-time information from [barnowl](https://www.npmjs.com/package/barnowl) and other barnacles instances, and maintain the current state of all detected devices.  barnacles ensure that contextual information propagates efficiently from a local to a global scale in the Internet of Things.
+
+The [barnowl](https://www.npmjs.com/package/barnowl), barnacles, [barterer](https://www.npmjs.com/package/barterer) and [chickadee](https://www.npmjs.com/package/chickadee) packages all work together as a unit, conveniently bundled as [hlc-server](https://www.npmjs.com/package/hlc-server).  Check out our [developer page](http://reelyactive.github.io/) for more resources on reelyActive software and hardware.
+
+
 What's in a name?
 -----------------
 
-barnacles consume spatio-temporal data concerning wireless devices and emit notification events based on changes such as appearances, displacements and disappearances.  barnacles ensure that contextual information propagates efficiently from a local to a global scale in the Internet of Things.  Why the name?  As [Wikipedia so eloquently states](http://en.wikipedia.org/wiki/Barnacle#Sexual_reproduction), "To facilitate genetic transfer between isolated individuals, barnacles have extraordinarily long penises."  And given the current state of isolation of nodes in today's IoT, this package (pun intended) needs "the largest penis to body size ratio of the animal kingdom".
+As [Wikipedia so eloquently states](http://en.wikipedia.org/wiki/Barnacle#Sexual_reproduction), "To facilitate genetic transfer between isolated individuals, barnacles have extraordinarily long penises."  And given the current state of isolation of nodes in today's IoT, this package (pun intended) needs "the largest penis to body size ratio of the animal kingdom".
 
 Also, we hope the name provides occasions to overhear our Québecois colleagues say things like "Tu veux tu configurer ta barnacle!?!"
-
-Check out our [developer page](http://reelyactive.github.io/) for more resources on our software and hardware.
 
 
 Installation
@@ -17,7 +23,7 @@ Installation
 
     npm install barnacles
 
-barnacles are tightly coupled with [barnowl](https://www.npmjs.org/package/barnowl), our IoT middleware package.  The latter provides a source of data to the former, as the following example will show. 
+barnacles are tightly coupled with [barnowl](https://www.npmjs.com/package/barnowl), our IoT middleware package.  The latter provides a source of data to the former, as the following example will show. 
 
 
 Hello barnacles & barnowl
