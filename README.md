@@ -2,10 +2,15 @@ barnacles
 =========
 
 
+![barnacles logo](http://reelyactive.com/images/barnacles.jpg)
+
+
 A real-time location & sensor data aggregator for the IoT
 ---------------------------------------------------------
 
-barnacles consume spatio-temporal data concerning wireless devices and emit notification events based on changes such as appearances, displacements and disappearances.  barnacles collect this real-time information from [barnowl](https://www.npmjs.com/package/barnowl) and other barnacles instances, and maintain the current state of all detected devices.  barnacles ensure that contextual information propagates efficiently from a local to a global scale in the Internet of Things.
+barnacles consume spatio-temporal data regarding wireless devices and emit notification events based on changes such as appearances, displacements and disappearances.  barnacles collect this real-time information from [barnowl](https://www.npmjs.com/package/barnowl) and other barnacles instances, and maintain the current state of all detected devices.  barnacles ensure that contextual information propagates efficiently from a local to a global scale in the Internet of Things.  barnacles can notify third-party services such as Google Analytics via a REST API.
+
+__In the scheme of Things (pun intended)__
 
 The [barnowl](https://www.npmjs.com/package/barnowl), barnacles, [barterer](https://www.npmjs.com/package/barterer) and [chickadee](https://www.npmjs.com/package/chickadee) packages all work together as a unit, conveniently bundled as [hlc-server](https://www.npmjs.com/package/hlc-server).  Check out our [developer page](http://reelyactive.github.io/) for more resources on reelyActive software and hardware.
 
