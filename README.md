@@ -292,6 +292,7 @@ The following options are supported when instantiating barnacles (those shown ar
 
     {
       httpPort: 3005,
+      useCors: false,
       disappearanceMilliseconds: 10000,
       keepAliveMilliseconds: 5000
     }
