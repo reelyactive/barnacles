@@ -8,7 +8,7 @@
     "IoT",
     "RTLS"
   ],
-  "version": "0.2.0",
+  "version": "0.2.1",
   "engines": {
     "node": "^0.10.0"
   },
@@ -24,6 +24,7 @@
     "express": ">=4.0.0",
     "nedb": ">=1.1.1",
     "body-parser": ">=1.8.0",
+    "cors": ">=2.4.2",
     "universal-analytics": ">=0.3.6"
   },
   "devDependencies": {},
