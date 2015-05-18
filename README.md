@@ -160,10 +160,11 @@ A successful response would be as follows:
 Querying the current state
 --------------------------
 
-It is possible to query the current state of barnacles.  There are the following three query options:
+It is possible to query the current state of barnacles.  There are the following four query options:
 - "transmittedBy" returns the transmissions by the devices with the given ids
 - "receivedBy" returns every transmission received by the devices with the given ids
-- "receivedBySame" returns every transmission received by the same devices which decoded the given ids with the strongest RSSI
+- "receivedStrongestBy" returns every transmission received strongest by the devices with the given ids
+- "receivedBySame" returns every transmission received by the same devices which decoded the given ids
 
 For example, based on the Hello barnacles & barnowl example above, the following would query the most recent _transmission_ by device 001bc50940100000:
 
