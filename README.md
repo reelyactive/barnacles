@@ -2,14 +2,25 @@ barnacles
 =========
 
 
+A real-time location & sensor data aggregator for the IoT
+---------------------------------------------------------
+
+barnacles consume spatio-temporal data regarding wireless devices and emit notification events based on changes such as appearances, displacements and disappearances.  barnacles collect this real-time information from [barnowl](https://www.npmjs.com/package/barnowl) and other barnacles instances, and maintain the current state of all detected devices.  barnacles ensure that contextual information propagates efficiently from a local to a global scale in the Internet of Things.  barnacles can notify third-party services such as Google Analytics via a REST API.
+
+__In the scheme of Things (pun intended)__
+
+The [barnowl](https://www.npmjs.com/package/barnowl), barnacles, [barterer](https://www.npmjs.com/package/barterer) and [chickadee](https://www.npmjs.com/package/chickadee) packages all work together as a unit, conveniently bundled as [hlc-server](https://www.npmjs.com/package/hlc-server).  Check out our [developer page](http://reelyactive.github.io/) for more resources on reelyActive software and hardware.
+
+
+![barnacles logo](http://reelyactive.com/images/barnacles.jpg)
+
+
 What's in a name?
 -----------------
 
-barnacles consume spatio-temporal data concerning wireless devices and emit notification events based on changes such as appearances, displacements and disappearances.  barnacles ensure that contextual information propagates efficiently from a local to a global scale in the Internet of Things.  Why the name?  As [Wikipedia so eloquently states](http://en.wikipedia.org/wiki/Barnacle#Sexual_reproduction), "To facilitate genetic transfer between isolated individuals, barnacles have extraordinarily long penises."  And given the current state of isolation of nodes in today's IoT, this package (pun intended) needs "the largest penis to body size ratio of the animal kingdom".
+As [Wikipedia so eloquently states](http://en.wikipedia.org/wiki/Barnacle#Sexual_reproduction), "To facilitate genetic transfer between isolated individuals, barnacles have extraordinarily long penises."  And given the current state of isolation of nodes in today's IoT, this package (pun intended) needs "the largest penis to body size ratio of the animal kingdom".
 
 Also, we hope the name provides occasions to overhear our Québecois colleagues say things like "Tu veux tu configurer ta barnacle!?!"
-
-Check out our [developer page](http://reelyactive.github.io/) for more resources on our software and hardware.
 
 
 Installation
@@ -17,7 +28,7 @@ Installation
 
     npm install barnacles
 
-barnacles are tightly coupled with [barnowl](https://www.npmjs.org/package/barnowl), our IoT middleware package.  The latter provides a source of data to the former, as the following example will show. 
+barnacles are tightly coupled with [barnowl](https://www.npmjs.com/package/barnowl), our IoT middleware package.  The latter provides a source of data to the former, as the following example will show. 
 
 
 Hello barnacles & barnowl
@@ -64,48 +75,12 @@ When the above code is run, you should see output to the console similar to the 
     ...
 
 
-Querying the current state
---------------------------
-
-It is possible to query the current state of barnacles.  Currently only one query is supported, and this query is based on the identifier values of either wireless transmitters and/or receivers.  For example, the following query would be suitable for the Hello barnacles & barnowl example above.
-
-```javascript
-notifications.getState( { ids: ["001bc50940100000", "001bc50940800000"] },
-                        function(state) { console.log(state) } );
-```
-
-This query would return via the callback all current events which have one of the given ids as either:
-- their own identifier value
-- the identifier value of one of their decoders
-
-In the latter case, the radio decodings of the event are omitted from the results.  The results of the above query would resemble the following:
-
-    {
-      "001bc50940100000": {
-        "identifier": {
-          "type": "EUI-64",
-          "value": "001bc50940100000",
-          "flags": {
-            "transmissionCount": 0
-          }
-        },
-        "timestamp": "2014-01-01T12:34:56.789Z",
-        "radioDecodings": [
-          {
-            "rssi": 135,
-            "identifier": {
-              "type": "EUI-64",
-              "value": "001bc50940800001"
-            }
-          }
-        ]
-      }
-    }
-
 RESTful interactions
 --------------------
 
-__GET /statistics__
+Include _Content-Type: application/json_ in the header of all interactions in which JSON is sent to barnacles.
+
+### GET /statistics
 
 Retrieve the latest real-time statistics.  The response will be as follows:
 
@@ -129,6 +104,145 @@ Retrieve the latest real-time statistics.  The response will be as follows:
     }
 
 where _devices_ is the number of devices in the current state and all other values are the average number of events per second in the last statistics period.
+
+### POST /events
+
+Create an event.  This includes a tiraid and an event type, the latter being one of the following:
+- appearance
+- displacement
+- disappearance
+- keep-alive
+
+For instance, an _appearance_ of transmitting device id _2c0ffeeb4bed_ on receiving device id _001bc50940810000_ would be created with a POST /events including the following JSON:
+
+    { 
+      "event": "appearance", 
+      "tiraid": {
+        "identifier": {
+          "type": "ADVA-48",
+          "value": "2c0ffeeb4bed",
+          "advHeader": {
+            "type": "SCAN_REQ",
+            "length": 12,
+            "txAdd": "public",
+            "rxAdd": "public"
+          },
+          "advData": {}
+        },
+        "timestamp": "2015-01-01T01:23:45.678Z",
+        "radioDecodings": [
+          {
+            "rssi": 169,
+            "identifier": {
+              "type": "EUI-64",
+              "value": "001bc50940810000"
+            }
+          }
+        ]
+      }
+    }
+
+A successful response would be as follows:
+
+    {
+      "_meta": {
+        "message": "ok",
+        "statusCode": 200
+      },
+      "_links": {
+        "self": {
+          "href": "http://localhost:3005/events"
+        }
+      }
+    }
+
+
+Querying the current state
+--------------------------
+
+It is possible to query the current state of barnacles.  There are the following four query options:
+- "transmittedBy" returns the transmissions by the devices with the given ids
+- "receivedBy" returns every transmission received by the devices with the given ids
+- "receivedStrongestBy" returns every transmission received strongest by the devices with the given ids
+- "receivedBySame" returns every transmission received by the same devices which decoded the given ids
+
+For example, based on the Hello barnacles & barnowl example above, the following would query the most recent _transmission_ by device 001bc50940100000:
+
+```javascript
+var options = { query: "transmittedBy",
+                ids: ["001bc50940100000"] };
+notifications.getState(options, function(state) { console.log(state) } );
+```
+
+The results of the above query might resemble the following:
+
+    {
+      "devices": {
+        "001bc50940100000": {
+          "identifier": {
+            "type": "EUI-64",
+            "value": "001bc50940100000",
+            "flags": {
+              "transmissionCount": 0
+            }
+          },
+          "timestamp": "2014-01-01T12:34:56.789Z",
+          "radioDecodings": [
+            {
+              "rssi": 135,
+              "identifier": {
+                "type": "EUI-64",
+                "value": "001bc50940800000"
+              }
+            }
+          ]
+        }
+      }
+    }
+
+It is possible to include an _omit_ option if either the timestamp, radioDecodings and/or identifier of the tiraid are not required.  For example to query which device transmissions are _received_ by devices 001bc50940800000 and 001bc50940810000, omitting their timestamp and radioDecodings:
+
+```javascript
+var options = { query: "receivedBy",
+                ids: ["001bc50940800000", "001bc50940810000"],
+                omit: ["timestamp", "radioDecodings"] };
+notifications.getState(options, function(state) { console.log(state) } );
+```
+
+The results of the above query might resemble the following:
+
+    {
+      "devices": {
+        "001bc50940100000": {
+          "identifier": {
+            "type": "EUI-64",
+            "value": "001bc50940100000",
+            "flags": {
+              "transmissionCount": 0
+            }
+          }
+        },
+        "fee150bada55": {
+          "identifier": {
+            "type": "ADVA-48",
+            "value": "fee150bada55",
+            "advHeader": {
+              "type": "ADV_NONCONNECT_IND",
+              "length": 22,
+              "txAdd": "random",
+              "rxAdd": "public"
+            },
+            "advData": {
+              "flags": [
+                "LE Limited Discoverable Mode",
+                "BR/EDR Not Supported"
+              ],
+              "completeLocalName": "reelyActive"
+            }
+          }
+        }
+      }
+    }
 
 
 Querying real-time statistics
@@ -156,7 +270,7 @@ Connecting with services
 
 It is possible to connect different services such that they receive the notifications via their API.  The following services are supported:
 
-__Google Universal Analytics__
+### Google Universal Analytics
 
 barnacles can send notifications to [Google's Universal Analytics platform](http://www.google.ca/analytics/) such that a wireless device being detected by a sensor is analagous to a user hitting a webpage.  In other words, imagine a physical location as a website, and the "invisible buttons" are webpages.  A wireless device moving through that space triggering invisible buttons is equivalent to a user browsing a website.  And it's all possible in one line of code:
 
@@ -179,6 +293,7 @@ The following options are supported when instantiating barnacles (those shown ar
 
     {
       httpPort: 3005,
+      useCors: false,
       disappearanceMilliseconds: 10000,
       keepAliveMilliseconds: 5000
     }
@@ -190,7 +305,10 @@ Notes:
 What's next?
 ------------
 
-This is an active work in progress.  Expect regular changes and updates, as well as improved documentation!
+This is an active work in progress.  Expect regular changes and updates, as well as improved documentation!  If you're developing with barnacles check out:
+* [diyActive](http://reelyactive.github.io/) our developer page
+* our [node-style-guide](https://github.com/reelyactive/node-style-guide) for development
+* our [contact information](http://context.reelyactive.com/contact.html) to get in touch if you'd like to contribute
 
 
 License
