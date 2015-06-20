@@ -80,7 +80,7 @@ RESTful interactions
 
 Include _Content-Type: application/json_ in the header of all interactions in which JSON is sent to barnacles.
 
-__GET /statistics__
+### GET /statistics
 
 Retrieve the latest real-time statistics.  The response will be as follows:
 
@@ -105,7 +105,7 @@ Retrieve the latest real-time statistics.  The response will be as follows:
 
 where _devices_ is the number of devices in the current state and all other values are the average number of events per second in the last statistics period.
 
-__POST /events__
+### POST /events
 
 Create an event.  This includes a tiraid and an event type, the latter being one of the following:
 - appearance
@@ -270,7 +270,7 @@ Connecting with services
 
 It is possible to connect different services such that they receive the notifications via their API.  The following services are supported:
 
-__Google Universal Analytics__
+### Google Universal Analytics
 
 barnacles can send notifications to [Google's Universal Analytics platform](http://www.google.ca/analytics/) such that a wireless device being detected by a sensor is analagous to a user hitting a webpage.  In other words, imagine a physical location as a website, and the "invisible buttons" are webpages.  A wireless device moving through that space triggering invisible buttons is equivalent to a user browsing a website.  And it's all possible in one line of code:
 
@@ -305,7 +305,10 @@ Notes:
 What's next?
 ------------
 
-This is an active work in progress.  Expect regular changes and updates, as well as improved documentation!
+This is an active work in progress.  Expect regular changes and updates, as well as improved documentation!  If you're developing with barnacles check out:
+* [diyActive](http://reelyactive.github.io/) our developer page
+* our [node-style-guide](https://github.com/reelyactive/node-style-guide) for development
+* our [contact information](http://context.reelyactive.com/contact.html) to get in touch if you'd like to contribute
 
 
 License
