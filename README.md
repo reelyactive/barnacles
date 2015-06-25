@@ -270,6 +270,19 @@ Connecting with services
 
 It is possible to connect different services such that they receive the notifications via their API.  The following services are supported:
 
+### Barnacles (via REST)
+
+barnacles can send notifications to another barnacles instance.  This way the remote barnacles instance is aware of the local state.  For instance to send notifications to a barnacles instance hosted at www.remotebarnacles.com:
+
+```javascript
+notifications.addService( { service: "barnaclesrest",
+                            hostname: "www.remotebarnacles.com",
+                            port: 80,
+                            whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
+```
+
+In the case above, only notifications relative to the two whitelisted devices will be sent.  To send notifications for all devices, omit the whitelist property.
+
 ### Google Universal Analytics
 
 barnacles can send notifications to [Google's Universal Analytics platform](http://www.google.ca/analytics/) such that a wireless device being detected by a sensor is analagous to a user hitting a webpage.  In other words, imagine a physical location as a website, and the "invisible buttons" are webpages.  A wireless device moving through that space triggering invisible buttons is equivalent to a user browsing a website.  And it's all possible in one line of code:
