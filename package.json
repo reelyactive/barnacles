@@ -6,9 +6,10 @@
   "keywords": [
     "reelyActive",
     "IoT",
-    "RTLS"
+    "RTLS",
+    "websockets"
   ],
-  "version": "0.2.6",
+  "version": "0.2.7",
   "engines": {
     "node": "^0.10.0"
   },
