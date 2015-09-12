@@ -298,6 +298,26 @@ The optional _hostname_ can be used to specify the URL of an hlc-server instance
 
 The pageview path is recorded as /id/receiverID where the receiverID would for instance be 001bc50940800001.  Each wireless device is given a UUID and CID based on its identifier which allows tracking so long as the identifier does not change.
 
+### Initial State
+
+barnacles can send notifications to the [Initial State](https://www.initialstate.com/) platform.  This allows for real-time events to be logged and visualised.  For instance to stream real-time events to an Initial State bucket:
+
+```javascript
+notifications.addService( { service: "initialstate",
+                            bucketType: "location",
+                            bucketName: "Bucket Name",
+                            bucketKey: "Bucket Key",
+                            accessKey: "Your-Access-Key-Here" } );
+```
+
+Currently only one bucketType is supported:
+
+#### location
+
+The location of each radio transmitter is updated in real-time.  Specifically:
+- key: transmitter identifier
+- value: receiver identifier
+
 
 Options
 -------
