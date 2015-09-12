@@ -9,7 +9,7 @@
     "RTLS",
     "websockets"
   ],
-  "version": "0.2.8",
+  "version": "0.2.9",
   "engines": {
     "node": "^0.10.0"
   },
@@ -28,7 +28,7 @@
     "body-parser": ">=1.8.0",
     "cors": ">=2.4.2",
     "universal-analytics": ">=0.3.6",
-    "initial-state": ">=0.1.0"
+    "initial-state": ">=0.1.1"
   },
   "devDependencies": {},
   "bugs": {
