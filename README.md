@@ -334,6 +334,20 @@ The location of each radio transmitter is updated in real-time.  Specifically:
 - value: receiver identifier
 
 
+Connecting your service
+-----------------------
+
+Prefer instead to connect your own service to barnacles so that it receives a real-time stream of spatio-temporal events?  There's an easy way and there's an even easier way.  We'll start with the latter.
+
+### Use the Barnacles REST service
+
+The barnacles API is incredibly simple to copy, and we suggest that you set up an endpoint on your service that can ingest events from a POST request.  See [POST /events](#POST-events) for the structure of the data you'll receive.  And then set up your barnacles instance to post to that service by configuring the hostname, port and path as explained [here](#barnacles-via-rest).
+
+### Create your own service within barnacles
+
+If the barnacles API is unsuitable for your service, or if your service already has an npm package, it might be preferable to write your own service to add to the barnacles code base.  Inspire yourself from the existing services in the [lib/services](https://github.com/reelyactive/barnacles/tree/develop/lib/services) folder, and then [get in touch](http://context.reelyactive.com/contact.html) and/or make a pull request on the develop branch.
+
+
 Options
 -------
 
