@@ -280,10 +280,11 @@ barnacles can send notifications to another barnacles instance.  This way the re
 notifications.addService( { service: "barnaclesrest",
                             hostname: "www.remotebarnacles.com",
                             port: 80,
+                            path: '/events',
                             whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
 ```
 
-In the case above, only notifications relative to the two whitelisted devices will be sent.  To send notifications for all devices, omit the whitelist property.
+In the case above, only notifications relative to the two whitelisted devices will be sent.  To send notifications for all devices, omit the whitelist property.  The default path is '/events'.
 
 ### Google Universal Analytics
 
