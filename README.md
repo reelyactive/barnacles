@@ -5,7 +5,9 @@ barnacles
 A real-time location & sensor data aggregator for the IoT
 ---------------------------------------------------------
 
-barnacles consume spatio-temporal data regarding wireless devices and emit notification events based on changes such as appearances, displacements and disappearances.  barnacles collect this real-time information from [barnowl](https://www.npmjs.com/package/barnowl) and other barnacles instances, and maintain the current state of all detected devices.  barnacles ensure that contextual information propagates efficiently from a local to a global scale in the Internet of Things.  barnacles can notify third-party services such as Google Analytics via a REST API.
+barnacles consume real-time spatio-temporal information about wireless devices and emit notification events based on changes such as appearances, displacements and disappearances.  barnacles receive this information stream from [barnowl](https://www.npmjs.com/package/barnowl) and other barnacles instances, and maintain the current state of all detected devices.  barnacles ensure that contextual information propagates efficiently from a local to a global scale in the Internet of Things.
+
+barnacles can notify other barnacles and any third-party service that has a REST API.  Currently supported platforms include Google Analytics and several proprietary IoT and analytics services.
 
 __In the scheme of Things (pun intended)__
 
@@ -327,12 +329,19 @@ The following options are supported when instantiating barnacles (those shown ar
     {
       httpPort: 3005,
       useCors: false,
+      delayMilliseconds: 1000,
+      minDelayMilliseconds: 100,
+      historyMilliseconds: 5000,
       disappearanceMilliseconds: 10000,
       keepAliveMilliseconds: 5000
     }
 
 Notes:
-- none
+- delayMilliseconds specifies how long to wait for data to arrive from all possible sources before determining if an event occurred - note that this introduces the given amount of latency
+- minDelayMilliseconds specifies the minimum time between successive batches of event calculations - this can be tweaked to reduce CPU load
+- historyMilliseconds specifies how long to consider historic spatio-temporal data before it is flushed from memory - to avoid the possibility of data being ignored, ensure that _historyMilliseconds = keepAliveMilliseconds_
+- disappearanceMilliseconds specifies how long to wait after the most recent decoding before considering the transmitting device as disappeared and removing the record from memory
+- keepAliveMilliseconds specifies the maximum time between subsequent events for each transmitting device - if no displacement events occur, barnacles will emit a keep-alive notification every given period
 
 
 What's next?
