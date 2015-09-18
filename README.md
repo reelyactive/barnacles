@@ -7,7 +7,7 @@ A real-time location & sensor data aggregator for the IoT
 
 barnacles consume real-time spatio-temporal information about wireless devices and emit notification events based on changes such as appearances, displacements and disappearances.  barnacles receive this information stream from [barnowl](https://www.npmjs.com/package/barnowl) and other barnacles instances, and maintain the current state of all detected devices.  barnacles ensure that contextual information propagates efficiently from a local to a global scale in the Internet of Things.
 
-barnacles can notify other barnacles and any third-party service that has a REST API.  Currently supported platforms include Google Analytics and several proprietary IoT and analytics services.
+barnacles can notify other barnacles and any third-party service that has a REST API.  [Currently supported platforms](#connecting-with-services) include Google Analytics and several proprietary IoT and analytics services.  And it's easy to [connect your service](#connecting-your-service) too.
 
 __In the scheme of Things (pun intended)__
 
@@ -292,7 +292,7 @@ barnacles can send notifications to another barnacles instance.  This way the re
 notifications.addService( { service: "barnaclesrest",
                             hostname: "www.remotebarnacles.com",
                             port: 80,
-                            path: '/events',
+                            path: "/events",
                             whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
 ```
 
@@ -341,7 +341,13 @@ Prefer instead to connect your own service to barnacles so that it receives a re
 
 ### Use the Barnacles REST service
 
-The barnacles API is incredibly simple to copy, and we suggest that you set up an endpoint on your service that can ingest events from a POST request.  See [POST /events](#POST-events) for the structure of the data you'll receive.  And then set up your barnacles instance to post to that service by configuring the hostname, port and path as explained [here](#barnacles-via-rest).
+The barnacles API is incredibly simple to copy, and we suggest that you set up an endpoint on your service that can ingest events from a POST request.  See [POST /events](#post-events) for the structure of the data you'll receive.  And then set up your barnacles instance to post to that service by configuring the hostname, port and path as explained [here](#barnacles-via-rest), for example:
+
+```javascript
+notifications.addService( { service: "barnaclesrest",
+                            hostname: "www.myservice.com",
+                            path: "/mypath" } );
+```
 
 ### Create your own service within barnacles
 
