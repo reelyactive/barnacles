@@ -333,6 +333,18 @@ The location of each radio transmitter is updated in real-time.  Specifically:
 - key: transmitter identifier
 - value: receiver identifier
 
+### mnubo
+
+barnacles can send notifications to the [mnubo](http://mnubo.com/) platform.  For instance to stream real-time events to mnubo:
+
+```javascript
+notifications.addService( { service: "mnubo",
+                            clientId: "Your-ID-Here",
+                            clientSecret: "Your-Secret-Here",
+                            clientEnv: "sandbox",
+                            whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
+```
+
 
 Connecting your service
 -----------------------
