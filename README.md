@@ -292,7 +292,6 @@ barnacles can send notifications to another barnacles instance.  This way the re
 notifications.addService( { service: "barnaclesrest",
                             hostname: "www.remotebarnacles.com",
                             port: 80,
-                            path: "/events",
                             whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
 ```
 
