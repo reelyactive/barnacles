@@ -5,7 +5,9 @@ barnacles
 A real-time location & sensor data aggregator for the IoT
 ---------------------------------------------------------
 
-barnacles consume spatio-temporal data regarding wireless devices and emit notification events based on changes such as appearances, displacements and disappearances.  barnacles collect this real-time information from [barnowl](https://www.npmjs.com/package/barnowl) and other barnacles instances, and maintain the current state of all detected devices.  barnacles ensure that contextual information propagates efficiently from a local to a global scale in the Internet of Things.  barnacles can notify third-party services such as Google Analytics via a REST API.
+barnacles consume real-time spatio-temporal information about wireless devices and emit notification events based on changes such as appearances, displacements and disappearances.  barnacles receive this information stream from [barnowl](https://www.npmjs.com/package/barnowl) and other barnacles instances, and maintain the current state of all detected devices.  barnacles ensure that contextual information propagates efficiently from a local to a global scale in the Internet of Things.
+
+barnacles can notify other barnacles and any third-party service that has a REST API.  [Currently supported platforms](#connecting-with-services) include Google Analytics and several proprietary IoT and analytics services.  And it's easy to [connect your service](#connecting-your-service) too.
 
 __In the scheme of Things (pun intended)__
 
@@ -107,13 +109,23 @@ where _devices_ is the number of devices in the current state and all other valu
 
 ### POST /events
 
-Create an event.  This includes a tiraid and an event type, the latter being one of the following:
+Create one or more events.  Each event includes a tiraid and an event type, the latter being one of the following:
 - appearance
 - displacement
-- disappearance
+- disappearance (ignored)
 - keep-alive
 
-For instance, an _appearance_ of transmitting device id _2c0ffeeb4bed_ on receiving device id _001bc50940810000_ would be created with a POST /events including the following JSON:
+An array of events would be created with a POST /events including JSON such as the following (tiraids omitted for clarity):
+
+    {
+      "events": [
+        { "event": "appearance", "tiraid": { ... } },
+        { "event": "displacement", "tiraid": { ... } },
+        { "event": "keep-alive", "tiraid": { ... } }
+      ]
+    }
+
+For instance, if the first event listed above were an _appearance_ of transmitting device id _2c0ffeeb4bed_ on receiving device id _001bc50940810000_, the JSON would be as follows:
 
     { 
       "event": "appearance", 
@@ -142,7 +154,9 @@ For instance, an _appearance_ of transmitting device id _2c0ffeeb4bed_ on receiv
       }
     }
 
-A successful response would be as follows:
+Note that it is possible to create an individual event using the JSON structure specified immediately above, however, since version 0.3.0, the preferred structure is an array of events, as specified at the top of this section.
+
+In either case, a successful response would be as follows:
 
     {
       "_meta": {
@@ -281,7 +295,7 @@ notifications.addService( { service: "barnaclesrest",
                             whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
 ```
 
-In the case above, only notifications relative to the two whitelisted devices will be sent.  To send notifications for all devices, omit the whitelist property.
+In the case above, only notifications relative to the two whitelisted devices will be sent.  To send notifications for all devices, omit the whitelist property.  The default path is '/events'.
 
 ### Google Universal Analytics
 
@@ -318,6 +332,42 @@ The location of each radio transmitter is updated in real-time.  Specifically:
 - key: transmitter identifier
 - value: receiver identifier
 
+### mnubo
+
+barnacles can send notifications to the [mnubo](http://mnubo.com/) platform.  For instance to stream real-time events to mnubo:
+
+```javascript
+notifications.addService( { service: "mnubo",
+                            clientId: "Your-ID-Here",
+                            clientSecret: "Your-Secret-Here",
+                            clientEnv: "sandbox",
+                            whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
+```
+
+Note that the mnubo-sdk package needs to be installed separately should this service be used.  This is to facilitate backwards compatibility with older versions of Node.js.
+
+    npm install mnubo-sdk
+
+
+Connecting your service
+-----------------------
+
+Prefer instead to connect your own service to barnacles so that it receives a real-time stream of spatio-temporal events?  There's an easy way and there's an even easier way.  We'll start with the latter.
+
+### Use the Barnacles REST service
+
+The barnacles API is incredibly simple to copy, and we suggest that you set up an endpoint on your service that can ingest events from a POST request.  See [POST /events](#post-events) for the structure of the data you'll receive.  And then set up your barnacles instance to post to that service by configuring the hostname, port and path as explained [here](#barnacles-via-rest), for example:
+
+```javascript
+notifications.addService( { service: "barnaclesrest",
+                            hostname: "www.myservice.com",
+                            path: "/mypath" } );
+```
+
+### Create your own service within barnacles
+
+If the barnacles API is unsuitable for your service, or if your service already has an npm package, it might be preferable to write your own service to add to the barnacles code base.  Inspire yourself from the existing services in the [lib/services](https://github.com/reelyactive/barnacles/tree/develop/lib/services) folder, and then [get in touch](http://context.reelyactive.com/contact.html) and/or make a pull request on the develop branch.
+
 
 Options
 -------
@@ -327,12 +377,19 @@ The following options are supported when instantiating barnacles (those shown ar
     {
       httpPort: 3005,
       useCors: false,
+      delayMilliseconds: 1000,
+      minDelayMilliseconds: 100,
+      historyMilliseconds: 5000,
       disappearanceMilliseconds: 10000,
       keepAliveMilliseconds: 5000
     }
 
 Notes:
-- none
+- delayMilliseconds specifies how long to wait for data to arrive from all possible sources before determining if an event occurred - note that this introduces the given amount of latency
+- minDelayMilliseconds specifies the minimum time between successive batches of event calculations - this can be tweaked to reduce CPU load
+- historyMilliseconds specifies how long to consider historic spatio-temporal data before it is flushed from memory - to avoid the possibility of data being ignored, ensure that _historyMilliseconds = keepAliveMilliseconds_
+- disappearanceMilliseconds specifies how long to wait after the most recent decoding before considering the transmitting device as disappeared and removing the record from memory
+- keepAliveMilliseconds specifies the maximum time between subsequent events for each transmitting device - if no displacement events occur, barnacles will emit a keep-alive notification every given period
 
 
 What's next?

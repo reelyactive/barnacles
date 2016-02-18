@@ -9,9 +9,9 @@
     "RTLS",
     "websockets"
   ],
-  "version": "0.2.9",
+  "version": "0.3.2",
   "engines": {
-    "node": "^0.10.0"
+    "node": ">=0.10.0"
   },
   "main": "./lib/server.js",
   "bin": {
@@ -27,8 +27,9 @@
     "nedb": ">=1.1.1",
     "body-parser": ">=1.8.0",
     "cors": ">=2.4.2",
+    "reelib": ">=0.0.7",
     "universal-analytics": ">=0.3.6",
-    "initial-state": ">=0.1.1"
+    "initial-state": ">=0.2.0"
   },
   "devDependencies": {},
   "bugs": {
