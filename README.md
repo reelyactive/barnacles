@@ -344,6 +344,10 @@ notifications.addService( { service: "mnubo",
                             whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
 ```
 
+Note that the mnubo-sdk package needs to be installed separately should this service be used.  This is to facilitate backwards compatibility with older versions of Node.js.
+
+    npm install mnubo-sdk
+
 
 Connecting your service
 -----------------------
