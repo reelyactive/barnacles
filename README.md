@@ -297,6 +297,19 @@ notifications.addService( { service: "barnaclesrest",
 
 In the case above, only notifications relative to the two whitelisted devices will be sent.  To send notifications for all devices, omit the whitelist property.  The default path is '/events'.
 
+### Websockets
+
+barnacles can send notifications via websockets.  For instance to set up websockets on a namespace called _test_:
+
+```javascript
+notifications.addService( { service: "websocket",
+                            namespace: "/test"
+                            whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
+```
+
+If the barnacles instance were to be running on localhost port 3005, the notification stream could be consumed at localhost:3005/test.
+
+
 ### Google Universal Analytics
 
 barnacles can send notifications to [Google's Universal Analytics platform](http://www.google.ca/analytics/) such that a wireless device being detected by a sensor is analagous to a user hitting a webpage.  In other words, imagine a physical location as a website, and the "invisible buttons" are webpages.  A wireless device moving through that space triggering invisible buttons is equivalent to a user browsing a website.  And it's all possible in one line of code:
