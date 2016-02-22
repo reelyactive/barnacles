@@ -312,6 +312,10 @@ The optional _hostname_ can be used to specify the URL of an hlc-server instance
 
 The pageview path is recorded as /id/receiverID where the receiverID would for instance be 001bc50940800001.  Each wireless device is given a UUID and CID based on its identifier which allows tracking so long as the identifier does not change.
 
+This service requires the [universal-analytics](https://www.npmjs.com/package/universal-analytics) package which is _not_ listed as a dependency.  To use this service, you must manually install the package:
+
+    npm install universal-analytics
+
 ### Initial State
 
 barnacles can send notifications to the [Initial State](https://www.initialstate.com/) platform.  This allows for real-time events to be logged and visualised.  For instance to stream real-time events to an Initial State bucket:
