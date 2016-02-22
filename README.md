@@ -336,6 +336,10 @@ The location of each radio transmitter is updated in real-time.  Specifically:
 - key: transmitter identifier
 - value: receiver identifier
 
+This service requires the [initial-state](https://www.npmjs.com/package/initial-state) package which is _not_ listed as a dependency.  To use this service, you must manually install the package:
+
+    npm install initial-state
+
 ### mnubo
 
 barnacles can send notifications to the [mnubo](http://mnubo.com/) platform.  For instance to stream real-time events to mnubo:
