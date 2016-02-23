@@ -292,6 +292,7 @@ barnacles can send notifications to another barnacles instance.  This way the re
 notifications.addService( { service: "barnaclesrest",
                             hostname: "www.remotebarnacles.com",
                             port: 80,
+                            ignoreInfrastructureTx: false,
                             whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
 ```
 
@@ -303,7 +304,8 @@ barnacles can send notifications via websockets.  For instance to set up websock
 
 ```javascript
 notifications.addService( { service: "websocket",
-                            namespace: "/test"
+                            namespace: "/test",
+                            ignoreInfrastructureTx: false,
                             whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
 ```
 
@@ -318,6 +320,7 @@ barnacles can send notifications to [Google's Universal Analytics platform](http
 notifications.addService( { service: "google",
                             hostname: "http://hlc-server.url",
                             accountId: "UA-XXXXXXXX-X",
+                            ignoreInfrastructureTx: false,
                             whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
 ```
  
@@ -338,7 +341,9 @@ notifications.addService( { service: "initialstate",
                             bucketType: "location",
                             bucketName: "Bucket Name",
                             bucketKey: "Bucket Key",
-                            accessKey: "Your-Access-Key-Here" } );
+                            accessKey: "Your-Access-Key-Here",
+                            ignoreInfrastructureTx: false,
+                            whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
 ```
 
 Currently only one bucketType is supported:
@@ -362,6 +367,7 @@ notifications.addService( { service: "mnubo",
                             clientId: "Your-ID-Here",
                             clientSecret: "Your-Secret-Here",
                             clientEnv: "sandbox",
+                            ignoreInfrastructureTx: false,
                             whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
 ```
 
