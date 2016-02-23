@@ -292,10 +292,25 @@ barnacles can send notifications to another barnacles instance.  This way the re
 notifications.addService( { service: "barnaclesrest",
                             hostname: "www.remotebarnacles.com",
                             port: 80,
+                            ignoreInfrastructureTx: false,
                             whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
 ```
 
 In the case above, only notifications relative to the two whitelisted devices will be sent.  To send notifications for all devices, omit the whitelist property.  The default path is '/events'.
+
+### Websockets
+
+barnacles can send notifications via websockets.  For instance to set up websockets on a namespace called _test_:
+
+```javascript
+notifications.addService( { service: "websocket",
+                            namespace: "/test",
+                            ignoreInfrastructureTx: false,
+                            whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
+```
+
+If the barnacles instance were to be running on localhost port 3005, the notification stream could be consumed at localhost:3005/test.
+
 
 ### Google Universal Analytics
 
@@ -305,12 +320,17 @@ barnacles can send notifications to [Google's Universal Analytics platform](http
 notifications.addService( { service: "google",
                             hostname: "http://hlc-server.url",
                             accountId: "UA-XXXXXXXX-X",
+                            ignoreInfrastructureTx: false,
                             whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
 ```
  
 The optional _hostname_ can be used to specify the URL of an hlc-server instance.  This could be useful if you want to collect both physical and online "hits" of the same resource.  The _accountId_ is provided by Google when you set up Google Analytics Reporting.  The optional _whitelist_ limits the notifications to those with tiraids containing one or more of the given receiver ids.
 
 The pageview path is recorded as /id/receiverID where the receiverID would for instance be 001bc50940800001.  Each wireless device is given a UUID and CID based on its identifier which allows tracking so long as the identifier does not change.
+
+This service requires the [universal-analytics](https://www.npmjs.com/package/universal-analytics) package which is _not_ listed as a dependency.  To use this service, you must manually install the package:
+
+    npm install universal-analytics
 
 ### Initial State
 
@@ -321,7 +341,9 @@ notifications.addService( { service: "initialstate",
                             bucketType: "location",
                             bucketName: "Bucket Name",
                             bucketKey: "Bucket Key",
-                            accessKey: "Your-Access-Key-Here" } );
+                            accessKey: "Your-Access-Key-Here",
+                            ignoreInfrastructureTx: false,
+                            whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
 ```
 
 Currently only one bucketType is supported:
@@ -332,6 +354,10 @@ The location of each radio transmitter is updated in real-time.  Specifically:
 - key: transmitter identifier
 - value: receiver identifier
 
+This service requires the [initial-state](https://www.npmjs.com/package/initial-state) package which is _not_ listed as a dependency.  To use this service, you must manually install the package:
+
+    npm install initial-state
+
 ### mnubo
 
 barnacles can send notifications to the [mnubo](http://mnubo.com/) platform.  For instance to stream real-time events to mnubo:
@@ -341,10 +367,11 @@ notifications.addService( { service: "mnubo",
                             clientId: "Your-ID-Here",
                             clientSecret: "Your-Secret-Here",
                             clientEnv: "sandbox",
+                            ignoreInfrastructureTx: false,
                             whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
 ```
 
-Note that the mnubo-sdk package needs to be installed separately should this service be used.  This is to facilitate backwards compatibility with older versions of Node.js.
+This service requires the [mnubo-sdk](https://www.npmjs.com/package/mnubo-sdk) package which is _not_ listed as a dependency.  To use this service, you must manually install the package:
 
     npm install mnubo-sdk
 
