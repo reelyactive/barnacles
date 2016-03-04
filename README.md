@@ -408,7 +408,8 @@ The following options are supported when instantiating barnacles (those shown ar
       minDelayMilliseconds: 100,
       historyMilliseconds: 5000,
       disappearanceMilliseconds: 10000,
-      keepAliveMilliseconds: 5000
+      keepAliveMilliseconds: 5000,
+      enableMasterSocketForwarding: false
     }
 
 Notes:
@@ -417,6 +418,7 @@ Notes:
 - historyMilliseconds specifies how long to consider historic spatio-temporal data before it is flushed from memory - to avoid the possibility of data being ignored, ensure that _historyMilliseconds = keepAliveMilliseconds_
 - disappearanceMilliseconds specifies how long to wait after the most recent decoding before considering the transmitting device as disappeared and removing the record from memory
 - keepAliveMilliseconds specifies the maximum time between subsequent events for each transmitting device - if no displacement events occur, barnacles will emit a keep-alive notification every given period
+- enableMasterSocketForwarding specifies whether all events are forwarded on the master websocket
 
 
 What's next?
@@ -433,7 +435,7 @@ License
 
 MIT License
 
-Copyright (c) 2014-2015 reelyActive
+Copyright (c) 2014-2016 reelyActive
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
