@@ -109,23 +109,13 @@ where _devices_ is the number of devices in the current state and all other valu
 
 ### POST /events
 
-Create one or more events.  Each event includes a tiraid and an event type, the latter being one of the following:
+Create an event.  Each event includes a tiraid and an event type, the latter being one of the following:
 - appearance
 - displacement
 - disappearance (ignored)
 - keep-alive
 
-An array of events would be created with a POST /events including JSON such as the following (tiraids omitted for clarity):
-
-    {
-      "events": [
-        { "event": "appearance", "tiraid": { ... } },
-        { "event": "displacement", "tiraid": { ... } },
-        { "event": "keep-alive", "tiraid": { ... } }
-      ]
-    }
-
-For instance, if the first event listed above were an _appearance_ of transmitting device id _2c0ffeeb4bed_ on receiving device id _001bc50940810000_, the JSON would be as follows:
+For instance, if the event is an _appearance_ of transmitting device id _2c0ffeeb4bed_ on receiving device id _001bc50940810000_, the JSON would be as follows:
 
     { 
       "event": "appearance", 
@@ -154,9 +144,7 @@ For instance, if the first event listed above were an _appearance_ of transmitti
       }
     }
 
-Note that it is possible to create an individual event using the JSON structure specified immediately above, however, since version 0.3.0, the preferred structure is an array of events, as specified at the top of this section.
-
-In either case, a successful response would be as follows:
+A successful response would be as follows:
 
     {
       "_meta": {
