@@ -109,23 +109,13 @@ where _devices_ is the number of devices in the current state and all other valu
 
 ### POST /events
 
-Create one or more events.  Each event includes a tiraid and an event type, the latter being one of the following:
+Create an event.  Each event includes a tiraid and an event type, the latter being one of the following:
 - appearance
 - displacement
 - disappearance (ignored)
 - keep-alive
 
-An array of events would be created with a POST /events including JSON such as the following (tiraids omitted for clarity):
-
-    {
-      "events": [
-        { "event": "appearance", "tiraid": { ... } },
-        { "event": "displacement", "tiraid": { ... } },
-        { "event": "keep-alive", "tiraid": { ... } }
-      ]
-    }
-
-For instance, if the first event listed above were an _appearance_ of transmitting device id _2c0ffeeb4bed_ on receiving device id _001bc50940810000_, the JSON would be as follows:
+For instance, if the event is an _appearance_ of transmitting device id _2c0ffeeb4bed_ on receiving device id _001bc50940810000_, the JSON would be as follows:
 
     { 
       "event": "appearance", 
@@ -154,9 +144,7 @@ For instance, if the first event listed above were an _appearance_ of transmitti
       }
     }
 
-Note that it is possible to create an individual event using the JSON structure specified immediately above, however, since version 0.3.0, the preferred structure is an array of events, as specified at the top of this section.
-
-In either case, a successful response would be as follows:
+A successful response would be as follows:
 
     {
       "_meta": {
@@ -311,6 +299,18 @@ notifications.addService( { service: "websocket",
 
 If the barnacles instance were to be running on localhost port 3005, the notification stream could be consumed at localhost:3005/test.
 
+### Logfile
+
+barnacles can write events as comma-separated values (CSV) to a local logfile.  For instance to write to a file called _eventlog_:
+
+```javascript
+notifications.addService( { service: "logfile",
+                            logfileName: "eventlog",
+                            ignoreInfrastructureTx: false,
+                            whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
+```
+
+The output file name will be, for example, _eventlog-160101012345.csv_, where the numeric portion is the date and timestamp when the file is created.
 
 ### Google Universal Analytics
 
@@ -334,25 +334,26 @@ This service requires the [universal-analytics](https://www.npmjs.com/package/un
 
 ### Initial State
 
-barnacles can send notifications to the [Initial State](https://www.initialstate.com/) platform.  This allows for real-time events to be logged and visualised.  For instance to stream real-time events to an Initial State bucket:
+barnacles can send notifications to the [Initial State](https://www.initialstate.com/) platform.  This allows for infrastructure statistics to be logged and visualised.  For instance to stream reelceiver send counts to an Initial State bucket:
 
 ```javascript
 notifications.addService( { service: "initialstate",
-                            bucketType: "location",
-                            bucketName: "Bucket Name",
+                            bucketType: "sendCount",
                             bucketKey: "Bucket Key",
                             accessKey: "Your-Access-Key-Here",
-                            ignoreInfrastructureTx: false,
                             whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
 ```
 
-Currently only one bucketType is supported:
-
-#### location
-
-The location of each radio transmitter is updated in real-time.  Specifically:
-- key: transmitter identifier
-- value: receiver identifier
+The data key is always the reelceiverId and the value depends on the bucketType.  Currently, the following bucketTypes are supported:
+- uptimeSeconds
+- sendCount
+- crcPass
+- crcFail
+- maxRSSI
+- avgRSSI
+- minRSSI
+- temperatureCelcius
+- radioVoltage
 
 This service requires the [initial-state](https://www.npmjs.com/package/initial-state) package which is _not_ listed as a dependency.  To use this service, you must manually install the package:
 
