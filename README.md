@@ -334,25 +334,26 @@ This service requires the [universal-analytics](https://www.npmjs.com/package/un
 
 ### Initial State
 
-barnacles can send notifications to the [Initial State](https://www.initialstate.com/) platform.  This allows for real-time events to be logged and visualised.  For instance to stream real-time events to an Initial State bucket:
+barnacles can send notifications to the [Initial State](https://www.initialstate.com/) platform.  This allows for infrastructure statistics to be logged and visualised.  For instance to stream reelceiver send counts to an Initial State bucket:
 
 ```javascript
 notifications.addService( { service: "initialstate",
-                            bucketType: "location",
-                            bucketName: "Bucket Name",
+                            bucketType: "sendCount",
                             bucketKey: "Bucket Key",
                             accessKey: "Your-Access-Key-Here",
-                            ignoreInfrastructureTx: false,
                             whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
 ```
 
-Currently only one bucketType is supported:
-
-#### location
-
-The location of each radio transmitter is updated in real-time.  Specifically:
-- key: transmitter identifier
-- value: receiver identifier
+The data key is always the reelceiverId and the value depends on the bucketType.  Currently, the following bucketTypes are supported:
+- uptimeSeconds
+- sendCount
+- crcPass
+- crcFail
+- maxRSSI
+- avgRSSI
+- minRSSI
+- temperatureCelcius
+- radioVoltage
 
 This service requires the [initial-state](https://www.npmjs.com/package/initial-state) package which is _not_ listed as a dependency.  To use this service, you must manually install the package:
 
