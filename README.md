@@ -299,6 +299,18 @@ notifications.addService( { service: "websocket",
 
 If the barnacles instance were to be running on localhost port 3005, the notification stream could be consumed at localhost:3005/test.
 
+### Logfile
+
+barnacles can write events as comma-separated values (CSV) to a local logfile.  For instance to write to a file called _eventlog_:
+
+```javascript
+notifications.addService( { service: "logfile",
+                            logfileName: "eventlog",
+                            ignoreInfrastructureTx: false,
+                            whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
+```
+
+The output file name will be, for example, _eventlog-160101012345.csv_, where the numeric portion is the date and timestamp when the file is created.
 
 ### Google Universal Analytics
 
