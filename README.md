@@ -73,6 +73,48 @@ When the above code is run, you should see output to the console similar to the 
     ...
 
 
+Events
+------
+
+The events in the example above have the following structure:
+
+### Basic
+
+Contains only the minimum required fields.
+
+```javascript
+{
+  event: "appearance",
+  time: 1420075425678,
+  deviceId: 'fee150bada55',
+  receiverId: '001bc50940810000',
+  rssi: 150,
+  tiraid: { /* Included for legacy purposes only */ }
+}
+```
+
+### Contextual
+
+Same as above, but adds metadata associated with both the device and the receiver.  Requires a connection to a chickadee instance (see [Where to bind?](#where-to-bind)).
+
+```javascript
+{
+  event: "appearance",
+  time: 1420075425678,
+  deviceId: 'fee150bada55',
+  deviceAssociationIds: [],
+  deviceUrl: 'http://myjson.info/stories/test',
+  deviceTags: [ 'test' ],
+  receiverId: '001bc50940810000',
+  receiverUrl: 'http://sniffypedia.org/Product/reelyActive_RA-R436/',
+  receiverTags: [ 'test' ],
+  receiverDirectory: 'test',
+  rssi: 150,
+  tiraid: { /* Included for legacy purposes only */ }
+}
+```
+
+
 RESTful interactions
 --------------------
 
