@@ -47,24 +47,20 @@ middleware.bind( { protocol: 'test', path: 'default' } ); // See barnowl
 
 notifications.bind({ barnowl: middleware });
 
-notifications.on('appearance', function(tiraid) {
-  console.log(tiraid.identifier.value + " has appeared on "
-              + tiraid.radioDecodings[0].identifier.value);
+notifications.on('appearance', function(event) {
+  console.log(event.deviceId + ' has appeared on ' + event.receiverId);
 });
 
-notifications.on('displacement', function(tiraid) {
-  console.log(tiraid.identifier.value + " has displaced to "
-              + tiraid.radioDecodings[0].identifier.value);
+notifications.on('displacement', function(event) {
+  console.log(event.deviceId + ' has displaced to ' + event.receiverId);
 });
 
-notifications.on('disappearance', function(tiraid) {
-  console.log(tiraid.identifier.value + " has disappeared from "
-              + tiraid.radioDecodings[0].identifier.value);
+notifications.on('disappearance', function(event) {
+  console.log(event.deviceId + ' has disappeared from ' + event.receiverId);
 });
 
-notifications.on('keep-alive', function(tiraid) {
-  console.log(tiraid.identifier.value + " remains at "
-              + tiraid.radioDecodings[0].identifier.value);
+notifications.on('keep-alive', function(event) {
+  console.log(event.deviceId + ' remains at ' + event.receiverId);
 });
 ```
 
