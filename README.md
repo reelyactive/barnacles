@@ -76,6 +76,8 @@ When the above code is run, you should see output to the console similar to the 
 Events
 ------
 
+![events animation](http://reelyactive.github.io/images/service-events.gif)
+
 The events in the example above have the following structure:
 
 ### Basic
