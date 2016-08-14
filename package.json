@@ -2,14 +2,15 @@
   "name": "barnacles",
   "homepage": "https://github.com/reelyactive/barnacles/",
   "author": "reelyActive <webdev@reelyactive.com>",
-  "description": "Real-time location & sensor data aggregator.  We believe in an open Internet of Things.",
+  "description": "Real-time location & sensor data aggregator and propagator.  We believe in an open Internet of Things.",
   "keywords": [
     "reelyActive",
     "IoT",
     "RTLS",
+    "M2M",
     "websockets"
   ],
-  "version": "0.3.7",
+  "version": "0.4.0",
   "engines": {
     "node": ">=0.10.0"
   },
@@ -27,7 +28,7 @@
     "nedb": ">=1.1.1",
     "body-parser": ">=1.8.0",
     "cors": ">=2.4.2",
-    "reelib": ">=0.0.12"
+    "reelib": ">=0.0.13"
   },
   "devDependencies": {},
   "bugs": {
