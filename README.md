@@ -397,6 +397,26 @@ notifications.addService( { service: "barnaclesrest",
 If the barnacles API is unsuitable for your service, or if your service already has an npm package, it might be preferable to write your own service to add to the barnacles code base.  Inspire yourself from the existing services in the [lib/services](https://github.com/reelyactive/barnacles/tree/develop/lib/services) folder, and then [get in touch](http://context.reelyactive.com/contact.html) and/or make a pull request on the develop branch.
 
 
+Where to bind?
+--------------
+
+### barnowl
+
+[barnowl](https://www.npmjs.com/package/barnowl) provides a real-time stream of events.  barnacles can bind to multiple instances of barnowl.
+
+```javascript
+notifications.bind( { barnowl: middleware } );
+```
+
+### chickadee
+
+[chickadee](https://www.npmjs.com/package/chickadee) provides a contextual associations store.  When bound, barnacles will append any contextual information from chickadee to the events it propagates.  barnacles can bind to a single instance of chickadee only.  Compatible with chickadee@0.3.24 and above.
+
+```javascript
+notifications.bind( { chickadee: associations } );
+```
+
+
 Options
 -------
 
