@@ -109,7 +109,7 @@ Same as above, but adds metadata associated with both the device and the receive
       "receiverTags": [ 'test' ],
       "receiverDirectory": "test",
       "rssi": 150,
-      tiraid: { /* Included for legacy purposes only */ }
+      "tiraid": { /* Included for legacy purposes only */ }
     }
 
 
