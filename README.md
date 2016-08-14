@@ -47,24 +47,20 @@ middleware.bind( { protocol: 'test', path: 'default' } ); // See barnowl
 
 notifications.bind({ barnowl: middleware });
 
-notifications.on('appearance', function(tiraid) {
-  console.log(tiraid.identifier.value + " has appeared on "
-              + tiraid.radioDecodings[0].identifier.value);
+notifications.on('appearance', function(event) {
+  console.log(event.deviceId + ' has appeared on ' + event.receiverId);
 });
 
-notifications.on('displacement', function(tiraid) {
-  console.log(tiraid.identifier.value + " has displaced to "
-              + tiraid.radioDecodings[0].identifier.value);
+notifications.on('displacement', function(event) {
+  console.log(event.deviceId + ' has displaced to ' + event.receiverId);
 });
 
-notifications.on('disappearance', function(tiraid) {
-  console.log(tiraid.identifier.value + " has disappeared from "
-              + tiraid.radioDecodings[0].identifier.value);
+notifications.on('disappearance', function(event) {
+  console.log(event.deviceId + ' has disappeared from ' + event.receiverId);
 });
 
-notifications.on('keep-alive', function(tiraid) {
-  console.log(tiraid.identifier.value + " remains at "
-              + tiraid.radioDecodings[0].identifier.value);
+notifications.on('keep-alive', function(event) {
+  console.log(event.deviceId + ' remains at ' + event.receiverId);
 });
 ```
 
@@ -75,6 +71,46 @@ When the above code is run, you should see output to the console similar to the 
     001bc50940100000 has displaced to 001bc50940800001
     fee150bada55 has displaced to 001bc50940810001
     ...
+
+
+Events
+------
+
+![events animation](http://reelyactive.github.io/images/service-events.gif)
+
+The events in the example above have the following structure:
+
+### Basic
+
+Contains only the minimum required fields.
+
+    {
+      "event": "appearance",
+      "time": 1420075425678,
+      "deviceId": "fee150bada55",
+      "receiverId": "001bc50940810000",
+      "rssi": 150,
+      "tiraid": { /* Included for legacy purposes only */ }
+    }
+
+### Contextual
+
+Same as above, but adds metadata associated with both the device and the receiver.  Requires a connection to a chickadee instance (see [Where to bind?](#where-to-bind)).
+
+    {
+      "event": "appearance",
+      "time": 1420075425678,
+      "deviceId": "fee150bada55",
+      "deviceAssociationIds": [],
+      "deviceUrl": "http://myjson.info/stories/test",
+      "deviceTags": [ 'test' ],
+      "receiverId": "001bc50940810000",
+      "receiverUrl": "http://sniffypedia.org/Product/reelyActive_RA-R436/",
+      "receiverTags": [ 'test' ],
+      "receiverDirectory": "test",
+      "rssi": 150,
+      "tiraid": { /* Included for legacy purposes only */ }
+    }
 
 
 RESTful interactions
@@ -395,6 +431,26 @@ notifications.addService( { service: "barnaclesrest",
 ### Create your own service within barnacles
 
 If the barnacles API is unsuitable for your service, or if your service already has an npm package, it might be preferable to write your own service to add to the barnacles code base.  Inspire yourself from the existing services in the [lib/services](https://github.com/reelyactive/barnacles/tree/develop/lib/services) folder, and then [get in touch](http://context.reelyactive.com/contact.html) and/or make a pull request on the develop branch.
+
+
+Where to bind?
+--------------
+
+### barnowl
+
+[barnowl](https://www.npmjs.com/package/barnowl) provides a real-time stream of events.  barnacles can bind to multiple instances of barnowl.
+
+```javascript
+notifications.bind( { barnowl: middleware } );
+```
+
+### chickadee
+
+[chickadee](https://www.npmjs.com/package/chickadee) provides a contextual associations store.  When bound, barnacles will append any contextual information from chickadee to the events it propagates.  barnacles can bind to a single instance of chickadee only.  Compatible with chickadee@0.3.24 and above.
+
+```javascript
+notifications.bind( { chickadee: associations } );
+```
 
 
 Options
