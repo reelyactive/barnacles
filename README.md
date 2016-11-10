@@ -310,7 +310,7 @@ It is possible to connect different services such that they receive the notifica
 
 ### Barnacles (via REST)
 
-barnacles can send notifications to another barnacles instance.  This way the remote barnacles instance is aware of the local state.  For instance to send notifications to a barnacles instance hosted at www.remotebarnacles.com:
+barnacles can POST notifications to another barnacles instance (or any other server) via REST.  This way the remote barnacles instance is aware of the local state.  For instance to POST notifications to a barnacles instance hosted at www.remotebarnacles.com:
 
 ```javascript
 notifications.addService( { service: "barnaclesrest",
@@ -320,7 +320,22 @@ notifications.addService( { service: "barnaclesrest",
                             whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
 ```
 
-In the case above, only notifications relative to the two whitelisted devices will be sent.  To send notifications for all devices, omit the whitelist property.  The default path is '/events'.
+In the case above, only notifications relative to the two whitelisted devices will be POSTed.  To POST notifications for all devices, omit the whitelist property.  The default path is '/events'.
+
+### Barnacles (via MQTT)
+
+barnacles can publish notifications to another barnacles instance (or any other broker) via [MQTT](http://mqtt.org/).  This way the remote barnacles instance is aware of the local state.  For instance to publish notifications to a barnacles instance hosted at www.remotebarnacles.com:
+
+```javascript
+notifications.addService( { service: "barnaclesmqtt",
+                            hostname: "www.remotebarnacles.com",
+                            topic: "events"
+                            clientOptions: { keepalive: 3600 },
+                            ignoreInfrastructureTx: false,
+                            whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
+```
+
+In the case above, only notifications relative to the two whitelisted devices will be published.  To publish notifications for all devices, omit the whitelist property.  The default topic is 'events'.
 
 ### Websockets
 
