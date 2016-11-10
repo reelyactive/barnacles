@@ -337,6 +337,10 @@ notifications.addService( { service: "barnaclesmqtt",
 
 In the case above, only notifications relative to the two whitelisted devices will be published.  To publish notifications for all devices, omit the whitelist property.  The default topic is 'events'.
 
+This service requires the [mqtt](https://www.npmjs.com/package/mqtt) package which is _not_ listed as a dependency.  To use this service, you must manually install the package:
+
+    npm install mqtt
+
 ### Websockets
 
 barnacles can send notifications via websockets.  For instance to set up websockets on a namespace called _test_:
