@@ -14,7 +14,7 @@ __In the scheme of Things (pun intended)__
 The [barnowl](https://www.npmjs.com/package/barnowl), barnacles, [barterer](https://www.npmjs.com/package/barterer) and [chickadee](https://www.npmjs.com/package/chickadee) packages all work together as a unit, conveniently bundled as [hlc-server](https://www.npmjs.com/package/hlc-server).  Check out our [developer page](http://reelyactive.github.io/) for more resources on reelyActive software and hardware.
 
 
-![barnacles logo](http://reelyactive.github.io/barnacles/images/barnacles-bubble.png)
+![barnacles logo](https://reelyactive.github.io/barnacles/images/barnacles-bubble.png)
 
 
 What's in a name?
@@ -76,7 +76,7 @@ When the above code is run, you should see output to the console similar to the 
 Events
 ------
 
-![events animation](http://reelyactive.github.io/images/service-events.gif)
+![events animation](https://reelyactive.github.io/images/service-events.gif)
 
 The events in the example above have the following structure:
 
@@ -102,10 +102,10 @@ Same as above, but adds metadata associated with both the device and the receive
       "time": 1420075425678,
       "deviceId": "fee150bada55",
       "deviceAssociationIds": [],
-      "deviceUrl": "http://myjson.info/stories/test",
+      "deviceUrl": "https://myjson.info/stories/test",
       "deviceTags": [ 'test' ],
       "receiverId": "001bc50940810000",
-      "receiverUrl": "http://sniffypedia.org/Product/reelyActive_RA-R436/",
+      "receiverUrl": "https://sniffypedia.org/Product/reelyActive_RA-R436/",
       "receiverTags": [ 'test' ],
       "receiverDirectory": "test",
       "rssi": 150,
@@ -449,7 +449,7 @@ notifications.addService( { service: "barnaclesrest",
 
 ### Create your own service within barnacles
 
-If the barnacles API is unsuitable for your service, or if your service already has an npm package, it might be preferable to write your own service to add to the barnacles code base.  Inspire yourself from the existing services in the [lib/services](https://github.com/reelyactive/barnacles/tree/develop/lib/services) folder, and then [get in touch](http://context.reelyactive.com/contact.html) and/or make a pull request on the develop branch.
+If the barnacles API is unsuitable for your service, or if your service already has an npm package, it might be preferable to write your own service to add to the barnacles code base.  Inspire yourself from the existing services in the [lib/services](https://github.com/reelyactive/barnacles/tree/develop/lib/services) folder, and then [get in touch](http://www.reelyactive.com/contact/) and/or make a pull request on the develop branch.
 
 
 Where to bind?
@@ -470,6 +470,25 @@ notifications.bind( { barnowl: middleware } );
 ```javascript
 notifications.bind( { chickadee: associations } );
 ```
+
+### websocket
+
+barnacles can listen for events emitted by a websocket client.  For example to bind your barnacles instance to your real-time [Pareto](https://getpareto.com) data feed, first create and connect the websocket client, then bind it to barnacles.
+
+```javascript
+var io = require('socket.io-client');
+var PARETO_TOKEN = 'xxx';  // Listed in your Pareto account
+
+process.env.PARETO_TOKEN = PARETO_TOKEN;
+const mysocket = io('https://pareto.reelyactive.com',
+                    { query: { token: PARETO_TOKEN } });
+ 
+notifications.bind( { websocket: mysocket } );
+```
+
+The above example requires the [socket.io-client](https://www.npmjs.com/package/socket.io-client) package which is _not_ listed as a dependency.  To use this service, you must manually install the package:
+
+    npm install socket.io-client
 
 
 Options
@@ -503,7 +522,7 @@ What's next?
 This is an active work in progress.  Expect regular changes and updates, as well as improved documentation!  If you're developing with barnacles check out:
 * [diyActive](http://reelyactive.github.io/) our developer page
 * our [node-style-guide](https://github.com/reelyactive/node-style-guide) for development
-* our [contact information](http://context.reelyactive.com/contact.html) to get in touch if you'd like to contribute
+* our [contact information](http://www.reelyactive.com/contact/) to get in touch if you'd like to contribute
 
 
 License
@@ -511,7 +530,7 @@ License
 
 MIT License
 
-Copyright (c) 2014-2016 reelyActive
+Copyright (c) 2014-2017 reelyActive
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
