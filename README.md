@@ -11,7 +11,7 @@ barnacles can notify other barnacles and any third-party service that has a REST
 
 __In the scheme of Things (pun intended)__
 
-The [barnowl](https://www.npmjs.com/package/barnowl), barnacles, [barterer](https://www.npmjs.com/package/barterer) and [chickadee](https://www.npmjs.com/package/chickadee) packages all work together as a unit, conveniently bundled as [hlc-server](https://www.npmjs.com/package/hlc-server).  Check out our [developer page](http://reelyactive.github.io/) for more resources on reelyActive software and hardware.
+The [barnowl](https://www.npmjs.com/package/barnowl), barnacles, [barterer](https://www.npmjs.com/package/barterer) and [chickadee](https://www.npmjs.com/package/chickadee) packages all work together as a unit, conveniently bundled as [hlc-server](https://www.npmjs.com/package/hlc-server).  Check out our [developer page](https://reelyactive.github.io/) for more resources on reelyActive software and hardware.
 
 
 ![barnacles logo](https://reelyactive.github.io/barnacles/images/barnacles-bubble.png)
@@ -504,7 +504,8 @@ The following options are supported when instantiating barnacles (those shown ar
       historyMilliseconds: 5000,
       disappearanceMilliseconds: 10000,
       keepAliveMilliseconds: 5000,
-      enableMasterSocketForwarding: false
+      enableMasterSocketForwarding: false,
+      acceptStaleEvents: false
     }
 
 Notes:
@@ -514,13 +515,14 @@ Notes:
 - disappearanceMilliseconds specifies how long to wait after the most recent decoding before considering the transmitting device as disappeared and removing the record from memory
 - keepAliveMilliseconds specifies the maximum time between subsequent events for each transmitting device - if no displacement events occur, barnacles will emit a keep-alive notification every given period
 - enableMasterSocketForwarding specifies whether all events are forwarded on the master websocket
+- acceptStaleEvents specifies whether received events with a timestamp further in the past than the disappearanceMilliseconds are discarded (false) or accepted and updated to the current time (true)
 
 
 What's next?
 ------------
 
 This is an active work in progress.  Expect regular changes and updates, as well as improved documentation!  If you're developing with barnacles check out:
-* [diyActive](http://reelyactive.github.io/) our developer page
+* [diyActive](https://reelyactive.github.io/) our developer page
 * our [node-style-guide](https://github.com/reelyactive/node-style-guide) for development
 * our [contact information](http://www.reelyactive.com/contact/) to get in touch if you'd like to contribute
 
