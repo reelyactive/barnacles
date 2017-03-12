@@ -505,7 +505,8 @@ The following options are supported when instantiating barnacles (those shown ar
       disappearanceMilliseconds: 10000,
       keepAliveMilliseconds: 5000,
       enableMasterSocketForwarding: false,
-      acceptStaleEvents: false
+      acceptStaleEvents: false,
+      acceptFutureEvents: true
     }
 
 Notes:
@@ -516,6 +517,7 @@ Notes:
 - keepAliveMilliseconds specifies the maximum time between subsequent events for each transmitting device - if no displacement events occur, barnacles will emit a keep-alive notification every given period
 - enableMasterSocketForwarding specifies whether all events are forwarded on the master websocket
 - acceptStaleEvents specifies whether received events with a timestamp further in the past than the disappearanceMilliseconds are discarded (false) or accepted and updated to the current time (true)
+- acceptStaleEvents specifies whether received events with a timestamp in the future are discarded (false) or accepted and updated to the current time (true)
 
 
 What's next?
