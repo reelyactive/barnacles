@@ -306,7 +306,15 @@ where _devices_ is the number of devices in the current state and all other valu
 Connecting with services
 ------------------------
 
-It is possible to connect different services such that they receive the notifications via their API.  The following services are supported:
+It is possible to connect different services such that they receive the notifications via their API.  Each service can filter events based on an _accept/reject_ criteria which can include some or all of the following properties:
+
+    {
+      deviceIds: [ /* IDs that meet the criteria */ ],
+      receiverIds: [ /* IDs that meet the criteria */ ],
+      rssi: { minimum: #, maximum: # }
+    }
+
+A _null_ criteria (the default) will result in that criteria test (accept/reject) being ignored.  The following services are supported:
 
 ### Barnacles (via REST)
 
@@ -317,7 +325,9 @@ notifications.addService( { service: "barnaclesrest",
                             hostname: "www.remotebarnacles.com",
                             port: 80,
                             ignoreInfrastructureTx: false,
-                            whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
+                            accept: null,
+                            reject: null,
+                            whitelist: [ /* DEPRECATED: use accept/reject */ ] } );
 ```
 
 In the case above, only notifications relative to the two whitelisted devices will be POSTed.  To POST notifications for all devices, omit the whitelist property.  The default path is '/events'.
@@ -332,7 +342,9 @@ notifications.addService( { service: "barnaclesmqtt",
                             topic: "events"
                             clientOptions: { keepalive: 3600 },
                             ignoreInfrastructureTx: false,
-                            whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
+                            accept: null,
+                            reject: null,
+                            whitelist: [ /* DEPRECATED: use accept/reject */ ] } );
 ```
 
 In the case above, only notifications relative to the two whitelisted devices will be published.  To publish notifications for all devices, omit the whitelist property.  The default topic is 'events'.
@@ -349,7 +361,9 @@ barnacles can send notifications via websockets.  For instance to set up websock
 notifications.addService( { service: "websocket",
                             namespace: "/test",
                             ignoreInfrastructureTx: false,
-                            whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
+                            accept: null,
+                            reject: null,
+                            whitelist: [ /* DEPRECATED: use accept/reject */ ] } );
 ```
 
 If the barnacles instance were to be running on localhost port 3005, the notification stream could be consumed at localhost:3005/test.
@@ -362,7 +376,9 @@ barnacles can write events as comma-separated values (CSV) to a local logfile.  
 notifications.addService( { service: "logfile",
                             logfileName: "eventlog",
                             ignoreInfrastructureTx: false,
-                            whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
+                            accept: null,
+                            reject: null,
+                            whitelist: [ /* DEPRECATED: use accept/reject */ ] } );
 ```
 
 The output file name will be, for example, _eventlog-160101012345.csv_, where the numeric portion is the date and timestamp when the file is created.
@@ -376,7 +392,9 @@ notifications.addService( { service: "google",
                             hostname: "http://hlc-server.url",
                             accountId: "UA-XXXXXXXX-X",
                             ignoreInfrastructureTx: false,
-                            whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
+                            accept: null,
+                            reject: null,
+                            whitelist: [ /* DEPRECATED: use accept/reject */ ] } );
 ```
  
 The optional _hostname_ can be used to specify the URL of an hlc-server instance.  This could be useful if you want to collect both physical and online "hits" of the same resource.  The _accountId_ is provided by Google when you set up Google Analytics Reporting.  The optional _whitelist_ limits the notifications to those with tiraids containing one or more of the given receiver ids.
@@ -424,7 +442,9 @@ notifications.addService( { service: "mnubo",
                             clientSecret: "Your-Secret-Here",
                             clientEnv: "sandbox",
                             ignoreInfrastructureTx: false,
-                            whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
+                            accept: null,
+                            reject: null,
+                            whitelist: [ /* DEPRECATED: use accept/reject */ ] } );
 ```
 
 This service requires the [mnubo-sdk](https://www.npmjs.com/package/mnubo-sdk) package which is _not_ listed as a dependency.  To use this service, you must manually install the package:
