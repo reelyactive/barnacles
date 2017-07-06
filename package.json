@@ -10,7 +10,7 @@
     "M2M",
     "websockets"
   ],
-  "version": "0.4.9",
+  "version": "0.4.10",
   "engines": {
     "node": ">=0.10.0"
   },
@@ -28,6 +28,7 @@
     "nedb": ">=1.1.1",
     "body-parser": ">=1.8.0",
     "cors": ">=2.4.2",
+    "request": ">=2.0.0",
     "reelib": ">=0.0.17"
   },
   "devDependencies": {},

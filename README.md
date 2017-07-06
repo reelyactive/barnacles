@@ -383,6 +383,22 @@ notifications.addService( { service: "logfile",
 
 The output file name will be, for example, _eventlog-160101012345.csv_, where the numeric portion is the date and timestamp when the file is created.
 
+### Breadcrumbs
+
+barnacles can POST 'breadcrumb' updates to a remote server including all the devices observed as well as the latest GPS fix, if enabled.  For instance:
+
+```javascript
+notifications.addService( { service: "breadcrumbs",
+                            uri: "http://localhost:3000/breadcrumbs",
+                            updateMilliseconds: 60000,
+                            systemName: "reelyActive",
+                            properties: [ 'receiverId', 'rssi' ],
+                            gps: null, /* See gps package on npmjs */
+                            ignoreInfrastructureTx: true,
+                            accept: null,
+                            reject: null } );
+```
+
 ### Google Universal Analytics
 
 barnacles can send notifications to [Google's Universal Analytics platform](http://www.google.ca/analytics/) such that a wireless device being detected by a sensor is analagous to a user hitting a webpage.  In other words, imagine a physical location as a website, and the "invisible buttons" are webpages.  A wireless device moving through that space triggering invisible buttons is equivalent to a user browsing a website.  And it's all possible in one line of code:
