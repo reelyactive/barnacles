@@ -112,6 +112,16 @@ Same as above, but adds metadata associated with both the device and the receive
       "tiraid": { /* Included for legacy purposes only */ }
     }
 
+### Positioning
+
+If the strongest receiver has an associated position, the following two properties are added to the event:
+
+    {
+      /* In addition to the above... */
+      "position": [ 0, 0 ],
+      "positioningMethod": "strongestReceiver"
+    }
+
 
 RESTful interactions
 --------------------
