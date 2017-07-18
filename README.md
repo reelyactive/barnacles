@@ -551,6 +551,7 @@ The following options are supported when instantiating barnacles (those shown ar
       disappearanceMilliseconds: 10000,
       keepAliveMilliseconds: 5000,
       enableMasterSocketForwarding: false,
+      includeTiraidInEvent: false,
       acceptStaleEvents: false,
       acceptFutureEvents: true
     }
