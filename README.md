@@ -6,14 +6,14 @@ Efficient data aggregator/distributor for RFID, RTLS and M2M
 
 __barnacles__ aggregates a real-time stream of radio decodings.  Based on changes in packet data (M2M) or location (RTLS) for each device, __barnacles__ produces an event.  The compressed radio decoding data can then be distributed over a network or consumed locally, as required.
 
-![barnacles overview](https://reelyactive.github.io/barnowl/images/barnacles-overview.png)
+![barnacles overview](https://reelyactive.github.io/barnacles/images/barnacles-overview.png)
 
 __barnacles__ ingests and outputs a real-time stream of [raddec](https://github.com/reelyactive/raddec/) objects which facilitate any and all of the following applications:
 - RFID: _what_ is present, based on the device identifier?
 - RTLS: _where_ is it relative to the receiving devices?
 - M2M: _how_ is its status, based on any payload included in the packet?
 
-__barnacles__ is a lightweight [Node.js package](https://www.npmjs.com/package/barnacles) that can run on resource-constrained edge devices as well as on powerful cloud servers and anything in between.  It is typically connected with a __barnowl__ instance which provides real-time radio decodings from an underlying hardware layer.  Together these packages are core to the [reelyActive technology platform](https://www.reelyactive.com/technology/), which includes a wealth of complementary software and hardware.
+__barnacles__ is a lightweight [Node.js package](https://www.npmjs.com/package/barnacles) that can run on resource-constrained edge devices as well as on powerful cloud servers and anything in between.  It is typically connected with a __barnowl__ instance which sources real-time radio decodings from an underlying hardware layer.  Together these packages are core to the [reelyActive technology platform](https://www.reelyactive.com/technology/), which includes a wealth of complementary software and hardware.
 
 
 Installation
