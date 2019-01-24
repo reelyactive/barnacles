@@ -55,11 +55,11 @@ As output you should see a stream of [raddec](https://github.com/reelyactive/rad
        rssi: -66 } ],
   packets: [ "061b55443322110002010611074449555520657669746341796c656572" ],
   timestamp: 1547693457133,
-  event: "appearance"
+  events: [ 0 ]
 }
 ```
 
-Regardless of the underlying RF protocol and hardware, the [raddec](https://github.com/reelyactive/raddec/) specifies _what_ (transmitterId) is _where_ (receiverId & rssi), as well as _how_ (packets) and _when_ (timestamp).  __barnacles__ adds an _event_ property which indicates what has notably changed in the most recent radio decoding(s).
+Regardless of the underlying RF protocol and hardware, the [raddec](https://github.com/reelyactive/raddec/) specifies _what_ (transmitterId) is _where_ (receiverId & rssi), as well as _how_ (packets) and _when_ (timestamp).  __barnacles__ adds an _events_ property which indicates what has notably changed in the most recent radio decoding(s).
 
 
 C'est-tu tout que ta barnacles peut faire?
