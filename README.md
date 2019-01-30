@@ -2,16 +2,108 @@ barnacles
 =========
 
 
-A real-time location & sensor data aggregator for the IoT
----------------------------------------------------------
+Efficient data aggregator/distributor for RFID, RTLS and M2M
+------------------------------------------------------------
 
-barnacles consume real-time spatio-temporal information about wireless devices and emit notification events based on changes such as appearances, displacements and disappearances.  barnacles receive this information stream from [barnowl](https://www.npmjs.com/package/barnowl) and other barnacles instances, and maintain the current state of all detected devices.  barnacles ensure that contextual information propagates efficiently from a local to a global scale in the Internet of Things.
+__barnacles__ aggregates a real-time stream of radio decodings.  Based on changes in packet data (M2M) or location (RTLS) for each device, __barnacles__ produces an event.  The compressed radio decoding data can then be distributed over a network or consumed locally, as required.
 
-barnacles can notify other barnacles and any third-party service that has a REST API.  [Currently supported platforms](#connecting-with-services) include Google Analytics and several proprietary IoT and analytics services.  And it's easy to [connect your service](#connecting-your-service) too.
+![barnacles overview](https://reelyactive.github.io/barnacles/images/barnacles-overview.png)
 
-__In the scheme of Things (pun intended)__
+__barnacles__ ingests and outputs a real-time stream of [raddec](https://github.com/reelyactive/raddec/) objects which facilitate any and all of the following applications:
+- RFID: _what_ is present, based on the device identifier?
+- RTLS: _where_ is it relative to the receiving devices?
+- M2M: _how_ is its status, based on any payload included in the packet?
 
-The [barnowl](https://www.npmjs.com/package/barnowl), barnacles, [barterer](https://www.npmjs.com/package/barterer) and [chickadee](https://www.npmjs.com/package/chickadee) packages all work together as a unit, conveniently bundled as [hlc-server](https://www.npmjs.com/package/hlc-server).  Check out our [developer page](https://reelyactive.github.io/) for more resources on reelyActive software and hardware.
+__barnacles__ is a lightweight [Node.js package](https://www.npmjs.com/package/barnacles) that can run on resource-constrained edge devices as well as on powerful cloud servers and anything in between.  It is typically connected with a [barnowl](https://github.com/reelyactive/barnowl/) instance which sources real-time radio decodings from an underlying hardware layer.  Together these packages are core to the [reelyActive technology platform](https://www.reelyactive.com/technology/), which includes a wealth of complementary software and hardware.
+
+
+Installation
+------------
+
+    npm install barnacles
+
+
+Hello barnacles & barnowl
+-------------------------
+
+```javascript
+const Barnowl = require('barnowl');
+const Barnacles = require('barnacles');
+
+let barnowl = new Barnowl();
+barnowl.addListener(Barnowl, {}, Barnowl.TestListener, {}); // Source of data
+
+let barnacles = new Barnacles({ barnowl: barnowl });
+barnacles.on('raddec', function(raddec) {
+  console.log(raddec);
+});
+```
+
+As output you should see a stream of [raddec](https://github.com/reelyactive/raddec/) objects similar to the following:
+
+```javascript
+{
+  transmitterId: "001122334455",
+  transmitterIdType: 2,
+  rssiSignature:
+   [ { receiverId: "001bc50940810000",
+       receiverIdType: 1,
+       numberOfDecodings: 1,
+       rssi: -60 },
+     { receiverId: "001bc50940810001",
+       receiverIdType: 1,
+       numberOfDecodings: 1,
+       rssi: -66 } ],
+  packets: [ "061b55443322110002010611074449555520657669746341796c656572" ],
+  timestamp: 1547693457133,
+  events: [ 0 ]
+}
+```
+
+Regardless of the underlying RF protocol and hardware, the [raddec](https://github.com/reelyactive/raddec/) specifies _what_ (transmitterId) is _where_ (receiverId & rssi), as well as _how_ (packets) and _when_ (timestamp).  __barnacles__ adds an _events_ property which indicates what has notably changed in the most recent radio decoding(s).
+
+
+C'est-tu tout que ta barnacles peut faire?
+------------------------------------------
+
+The silly Québécois title aside (we couldn't resist the temptation), although __barnacles__ and __barnowl__ together may suffice for simple event-driven applications, functionality can be greatly extended with the following software packages:
+- [advlib](https://github.com/reelyactive/advlib) to decode the individual packets from hexadecimal strings into JSON
+- [chickadee](https://github.com/reelyactive/chickadee) to associate structured, linked data with the devices identified in the radio decodings
+
+
+How to distribute data?
+-----------------------
+
+__barnacles__ is an EventEmitter which means that software can listen for _'raddec'_ events.  To facilitate distribution over a network, __barnacles__ interfaces with a number of complementary software packages to keep the code as lightweight and modular as possible.  The following table lists all these interface packages which integrate seamlessly with __barnacles__ in just two lines of code.
+
+| Interface package                                                       | Provides |
+|:------------------------------------------------------------------------|:---------|
+| [barnacles-socketio](https://github.com/reelyactive/barnacles-socketio) | socket.io push API |
+
+### Example: socket.io push API
+
+```javascript
+const Barnowl = require('barnowl');
+const Barnacles = require('barnacles');
+const BarnaclesSocketIO = require('barnacles-socketio'); // 1: Include the package
+
+let barnowl = new Barnowl();
+let barnacles = new Barnacles({ barnowl: barnowl });
+barnowl.addListener(Barnowl, {}, Barnowl.TestListener, {});
+
+// 2: Add the interface with relevant options
+barnacles.addInterface(BarnaclesSocketIO, {});
+```
+
+
+Options
+-------
+
+__barnacles__ supports the following options:
+
+| Property              | Default | Description                            | 
+|:----------------------|:--------|:---------------------------------------|
+| barnowl               | null    | barnowl instance providing source data |
 
 
 ![barnacles logo](https://reelyactive.github.io/barnacles/images/barnacles-bubble.png)
@@ -20,560 +112,20 @@ The [barnowl](https://www.npmjs.com/package/barnowl), barnacles, [barterer](http
 What's in a name?
 -----------------
 
-As [Wikipedia so eloquently states](http://en.wikipedia.org/wiki/Barnacle#Sexual_reproduction), "To facilitate genetic transfer between isolated individuals, barnacles have extraordinarily long penises."  And given the current state of isolation of nodes in today's IoT, this package (pun intended) needs "the largest penis to body size ratio of the animal kingdom".
+As [Wikipedia so eloquently states](http://en.wikipedia.org/wiki/Barnacle#Sexual_reproduction), "To facilitate genetic transfer between isolated individuals, __barnacles__ have extraordinarily long penises."  And given the current state of isolation of nodes in today's IoT, this package (pun intended) needs "the largest penis to body size ratio of the animal kingdom".
 
-Also, we hope the name provides occasions to overhear our Québecois colleagues say things like "Tu veux tu configurer ta barnacle!?!"
-
-
-Installation
-------------
-
-    npm install barnacles
-
-barnacles are tightly coupled with [barnowl](https://www.npmjs.com/package/barnowl), our IoT middleware package.  The latter provides a source of data to the former, as the following example will show. 
-
-
-Hello barnacles & barnowl
--------------------------
-
-```javascript
-var barnacles = require('barnacles');
-var barnowl = require('barnowl');
-
-var notifications = new barnacles();
-var middleware = new barnowl();
-
-middleware.bind( { protocol: 'test', path: 'default' } ); // See barnowl
-
-notifications.bind({ barnowl: middleware });
-
-notifications.on('appearance', function(event) {
-  console.log(event.deviceId + ' has appeared on ' + event.receiverId);
-});
-
-notifications.on('displacement', function(event) {
-  console.log(event.deviceId + ' has displaced to ' + event.receiverId);
-});
-
-notifications.on('disappearance', function(event) {
-  console.log(event.deviceId + ' has disappeared from ' + event.receiverId);
-});
-
-notifications.on('keep-alive', function(event) {
-  console.log(event.deviceId + ' remains at ' + event.receiverId);
-});
-```
-
-When the above code is run, you should see output to the console similar to the following:
-
-    001bc50940100000 has appeared on 001bc50940800000
-    fee150bada55 has appeared on 001bc50940810000
-    001bc50940100000 has displaced to 001bc50940800001
-    fee150bada55 has displaced to 001bc50940810001
-    ...
-
-
-Events
-------
-
-![events animation](https://reelyactive.github.io/images/service-events.gif)
-
-The events in the example above have the following structure:
-
-### Basic
-
-Contains only the minimum required fields.
-
-    {
-      "event": "appearance",
-      "time": 1420075425678,
-      "deviceId": "fee150bada55",
-      "receiverId": "001bc50940810000",
-      "rssi": 150,
-      "tiraid": { /* Included for legacy purposes only */ }
-    }
-
-### Contextual
-
-Same as above, but adds metadata associated with both the device and the receiver.  Requires a connection to a chickadee instance (see [Where to bind?](#where-to-bind)).
-
-    {
-      "event": "appearance",
-      "time": 1420075425678,
-      "deviceId": "fee150bada55",
-      "deviceAssociationIds": [],
-      "deviceUrl": "https://myjson.info/stories/test",
-      "deviceTags": [ 'test' ],
-      "receiverId": "001bc50940810000",
-      "receiverUrl": "https://sniffypedia.org/Product/reelyActive_RA-R436/",
-      "receiverTags": [ 'test' ],
-      "receiverDirectory": "test",
-      "rssi": 150,
-      "tiraid": { /* Included for legacy purposes only */ }
-    }
-
-### Positioning
-
-If the strongest receiver has an associated position, the following two properties are added to the event:
-
-    {
-      /* In addition to the above... */
-      "position": [ 0, 0 ],
-      "positioningMethod": "strongestReceiver"
-    }
-
-
-RESTful interactions
---------------------
-
-Include _Content-Type: application/json_ in the header of all interactions in which JSON is sent to barnacles.
-
-### GET /statistics
-
-Retrieve the latest real-time statistics.  The response will be as follows:
-
-    {
-      "_meta": {
-        "message": "ok",
-        "statusCode": 200
-      },
-      "_links": {
-        "self": {
-          "href": "http://localhost:3005/statistics"
-        }
-      },
-      "statistics": {
-        "devices": 2,
-        "tiraids": 2,
-        "appearances": 0,
-        "displacements": 0,
-        "disappearances": 0
-      }
-    }
-
-where _devices_ is the number of devices in the current state and all other values are the average number of events per second in the last statistics period.
-
-### POST /events
-
-Create an event.  Each event includes a tiraid and an event type, the latter being one of the following:
-- appearance
-- displacement
-- disappearance (ignored)
-- keep-alive
-
-For instance, if the event is an _appearance_ of transmitting device id _2c0ffeeb4bed_ on receiving device id _001bc50940810000_, the JSON would be as follows:
-
-    { 
-      "event": "appearance", 
-      "tiraid": {
-        "identifier": {
-          "type": "ADVA-48",
-          "value": "2c0ffeeb4bed",
-          "advHeader": {
-            "type": "SCAN_REQ",
-            "length": 12,
-            "txAdd": "public",
-            "rxAdd": "public"
-          },
-          "advData": {}
-        },
-        "timestamp": "2015-01-01T01:23:45.678Z",
-        "radioDecodings": [
-          {
-            "rssi": 169,
-            "identifier": {
-              "type": "EUI-64",
-              "value": "001bc50940810000"
-            }
-          }
-        ]
-      }
-    }
-
-A successful response would be as follows:
-
-    {
-      "_meta": {
-        "message": "ok",
-        "statusCode": 200
-      },
-      "_links": {
-        "self": {
-          "href": "http://localhost:3005/events"
-        }
-      }
-    }
-
-
-Querying the current state
---------------------------
-
-It is possible to query the current state of barnacles.  There are the following four query options:
-- "transmittedBy" returns the transmissions by the devices with the given ids
-- "receivedBy" returns every transmission received by the devices with the given ids
-- "receivedStrongestBy" returns every transmission received strongest by the devices with the given ids
-- "receivedBySame" returns every transmission received by the same devices which decoded the given ids
-
-For example, based on the Hello barnacles & barnowl example above, the following would query the most recent _transmission_ by device 001bc50940100000:
-
-```javascript
-var options = { query: "transmittedBy",
-                ids: ["001bc50940100000"] };
-notifications.getState(options, function(state) { console.log(state) } );
-```
-
-The results of the above query might resemble the following:
-
-    {
-      "devices": {
-        "001bc50940100000": {
-          "identifier": {
-            "type": "EUI-64",
-            "value": "001bc50940100000",
-            "flags": {
-              "transmissionCount": 0
-            }
-          },
-          "timestamp": "2014-01-01T12:34:56.789Z",
-          "radioDecodings": [
-            {
-              "rssi": 135,
-              "identifier": {
-                "type": "EUI-64",
-                "value": "001bc50940800000"
-              }
-            }
-          ]
-        }
-      }
-    }
-
-It is possible to include an _omit_ option if either the timestamp, radioDecodings and/or identifier of the tiraid are not required.  For example to query which device transmissions are _received_ by devices 001bc50940800000 and 001bc50940810000, omitting their timestamp and radioDecodings:
-
-```javascript
-var options = { query: "receivedBy",
-                ids: ["001bc50940800000", "001bc50940810000"],
-                omit: ["timestamp", "radioDecodings"] };
-notifications.getState(options, function(state) { console.log(state) } );
-```
-
-The results of the above query might resemble the following:
-
-    {
-      "devices": {
-        "001bc50940100000": {
-          "identifier": {
-            "type": "EUI-64",
-            "value": "001bc50940100000",
-            "flags": {
-              "transmissionCount": 0
-            }
-          }
-        },
-        "fee150bada55": {
-          "identifier": {
-            "type": "ADVA-48",
-            "value": "fee150bada55",
-            "advHeader": {
-              "type": "ADV_NONCONNECT_IND",
-              "length": 22,
-              "txAdd": "random",
-              "rxAdd": "public"
-            },
-            "advData": {
-              "flags": [
-                "LE Limited Discoverable Mode",
-                "BR/EDR Not Supported"
-              ],
-              "completeLocalName": "reelyActive"
-            }
-          }
-        }
-      }
-    }
-
-
-Querying real-time statistics
------------------------------
-
-It is possible to query the latest real-time statistics as follows:
-
-```javascript
-notifications.getStatistics();
-```
-
-This query will return the following:
-
-    { devices: 0,
-      tiraids: 0,
-      appearances: 0,
-      displacements: 0,
-      disappearances: 0 }
-
-where _devices_ is the number of devices in the current state and all other values are the average number of events per second in the last statistics period.
-
-
-Connecting with services
-------------------------
-
-It is possible to connect different services such that they receive the notifications via their API.  Each service can filter events based on an _accept/reject_ criteria which can include some or all of the following properties:
-
-    {
-      deviceIds: [ /* IDs that meet the criteria */ ],
-      receiverIds: [ /* IDs that meet the criteria */ ],
-      rssi: { minimum: #, maximum: # }
-    }
-
-A _null_ criteria (the default) will result in that criteria test (accept/reject) being ignored.  The following services are supported:
-
-### Barnacles (via REST)
-
-barnacles can POST notifications to another barnacles instance (or any other server) via REST.  This way the remote barnacles instance is aware of the local state.  For instance to POST notifications to a barnacles instance hosted at www.remotebarnacles.com:
-
-```javascript
-notifications.addService( { service: "barnaclesrest",
-                            hostname: "www.remotebarnacles.com",
-                            port: 80,
-                            ignoreInfrastructureTx: false,
-                            accept: null,
-                            reject: null,
-                            whitelist: [ /* DEPRECATED: use accept/reject */ ] } );
-```
-
-In the case above, only notifications relative to the two whitelisted devices will be POSTed.  To POST notifications for all devices, omit the whitelist property.  The default path is '/events'.
-
-### Barnacles (via MQTT)
-
-barnacles can publish notifications to another barnacles instance (or any other broker) via [MQTT](http://mqtt.org/).  This way the remote barnacles instance is aware of the local state.  For instance to publish notifications to a barnacles instance hosted at www.remotebarnacles.com:
-
-```javascript
-notifications.addService( { service: "barnaclesmqtt",
-                            hostname: "www.remotebarnacles.com",
-                            topic: "events"
-                            clientOptions: { keepalive: 3600 },
-                            ignoreInfrastructureTx: false,
-                            accept: null,
-                            reject: null,
-                            whitelist: [ /* DEPRECATED: use accept/reject */ ] } );
-```
-
-In the case above, only notifications relative to the two whitelisted devices will be published.  To publish notifications for all devices, omit the whitelist property.  The default topic is 'events'.
-
-This service requires the [mqtt](https://www.npmjs.com/package/mqtt) package which is _not_ listed as a dependency.  To use this service, you must manually install the package:
-
-    npm install mqtt
-
-### Websockets
-
-barnacles can send notifications via websockets.  For instance to set up websockets on a namespace called _test_:
-
-```javascript
-notifications.addService( { service: "websocket",
-                            namespace: "/test",
-                            ignoreInfrastructureTx: false,
-                            accept: null,
-                            reject: null,
-                            whitelist: [ /* DEPRECATED: use accept/reject */ ] } );
-```
-
-If the barnacles instance were to be running on localhost port 3005, the notification stream could be consumed at localhost:3005/test.
-
-### Logfile
-
-barnacles can write events as comma-separated values (CSV) to a local logfile.  For instance to write to a file called _eventlog_:
-
-```javascript
-notifications.addService( { service: "logfile",
-                            logfileName: "eventlog",
-                            ignoreInfrastructureTx: false,
-                            accept: null,
-                            reject: null,
-                            whitelist: [ /* DEPRECATED: use accept/reject */ ] } );
-```
-
-The output file name will be, for example, _eventlog-160101012345.csv_, where the numeric portion is the date and timestamp when the file is created.
-
-### Breadcrumbs
-
-barnacles can POST 'breadcrumb' updates to a remote server including all the devices observed as well as the latest GPS fix, if enabled.  For instance:
-
-```javascript
-notifications.addService( { service: "breadcrumbs",
-                            uri: "http://localhost:3000/breadcrumbs",
-                            updateMilliseconds: 60000,
-                            systemName: "reelyActive",
-                            properties: [ 'receiverId', 'rssi' ],
-                            gps: null, /* See gps package on npmjs */
-                            ignoreInfrastructureTx: true,
-                            accept: null,
-                            reject: null } );
-```
-
-### Google Universal Analytics
-
-barnacles can send notifications to [Google's Universal Analytics platform](http://www.google.ca/analytics/) such that a wireless device being detected by a sensor is analagous to a user hitting a webpage.  In other words, imagine a physical location as a website, and the "invisible buttons" are webpages.  A wireless device moving through that space triggering invisible buttons is equivalent to a user browsing a website.  And it's all possible in one line of code:
-
-```javascript
-notifications.addService( { service: "google",
-                            hostname: "http://hlc-server.url",
-                            accountId: "UA-XXXXXXXX-X",
-                            ignoreInfrastructureTx: false,
-                            accept: null,
-                            reject: null,
-                            whitelist: [ /* DEPRECATED: use accept/reject */ ] } );
-```
- 
-The optional _hostname_ can be used to specify the URL of an hlc-server instance.  This could be useful if you want to collect both physical and online "hits" of the same resource.  The _accountId_ is provided by Google when you set up Google Analytics Reporting.  The optional _whitelist_ limits the notifications to those with tiraids containing one or more of the given receiver ids.
-
-The pageview path is recorded as /id/receiverID where the receiverID would for instance be 001bc50940800001.  Each wireless device is given a UUID and CID based on its identifier which allows tracking so long as the identifier does not change.
-
-This service requires the [universal-analytics](https://www.npmjs.com/package/universal-analytics) package which is _not_ listed as a dependency.  To use this service, you must manually install the package:
-
-    npm install universal-analytics
-
-### Initial State
-
-barnacles can send notifications to the [Initial State](https://www.initialstate.com/) platform.  This allows for infrastructure statistics to be logged and visualised.  For instance to stream reelceiver send counts to an Initial State bucket:
-
-```javascript
-notifications.addService( { service: "initialstate",
-                            bucketType: "sendCount",
-                            bucketKey: "Bucket Key",
-                            accessKey: "Your-Access-Key-Here",
-                            whitelist: [ "001bc50940800000", "001bc50940810000" ] } );
-```
-
-The data key is always the reelceiverId and the value depends on the bucketType.  Currently, the following bucketTypes are supported:
-- uptimeSeconds
-- sendCount
-- crcPass
-- crcFail
-- maxRSSI
-- avgRSSI
-- minRSSI
-- temperatureCelcius
-- radioVoltage
-
-This service requires the [initial-state](https://www.npmjs.com/package/initial-state) package which is _not_ listed as a dependency.  To use this service, you must manually install the package:
-
-    npm install initial-state
-
-### mnubo
-
-barnacles can send notifications to the [mnubo](http://mnubo.com/) platform.  For instance to stream real-time events to mnubo:
-
-```javascript
-notifications.addService( { service: "mnubo",
-                            clientId: "Your-ID-Here",
-                            clientSecret: "Your-Secret-Here",
-                            clientEnv: "sandbox",
-                            ignoreInfrastructureTx: false,
-                            accept: null,
-                            reject: null,
-                            whitelist: [ /* DEPRECATED: use accept/reject */ ] } );
-```
-
-This service requires the [mnubo-sdk](https://www.npmjs.com/package/mnubo-sdk) package which is _not_ listed as a dependency.  To use this service, you must manually install the package:
-
-    npm install mnubo-sdk
-
-
-Connecting your service
------------------------
-
-Prefer instead to connect your own service to barnacles so that it receives a real-time stream of spatio-temporal events?  There's an easy way and there's an even easier way.  We'll start with the latter.
-
-### Use the Barnacles REST service
-
-The barnacles API is incredibly simple to copy, and we suggest that you set up an endpoint on your service that can ingest events from a POST request.  See [POST /events](#post-events) for the structure of the data you'll receive.  And then set up your barnacles instance to post to that service by configuring the hostname, port and path as explained [here](#barnacles-via-rest), for example:
-
-```javascript
-notifications.addService( { service: "barnaclesrest",
-                            hostname: "www.myservice.com",
-                            path: "/mypath" } );
-```
-
-### Create your own service within barnacles
-
-If the barnacles API is unsuitable for your service, or if your service already has an npm package, it might be preferable to write your own service to add to the barnacles code base.  Inspire yourself from the existing services in the [lib/services](https://github.com/reelyactive/barnacles/tree/develop/lib/services) folder, and then [get in touch](http://www.reelyactive.com/contact/) and/or make a pull request on the develop branch.
-
-
-Where to bind?
---------------
-
-### barnowl
-
-[barnowl](https://www.npmjs.com/package/barnowl) provides a real-time stream of events.  barnacles can bind to multiple instances of barnowl.
-
-```javascript
-notifications.bind( { barnowl: middleware } );
-```
-
-### chickadee
-
-[chickadee](https://www.npmjs.com/package/chickadee) provides a contextual associations store.  When bound, barnacles will append any contextual information from chickadee to the events it propagates.  barnacles can bind to a single instance of chickadee only.  Compatible with chickadee@0.3.24 and above.
-
-```javascript
-notifications.bind( { chickadee: associations } );
-```
-
-### websocket
-
-barnacles can listen for events emitted by a websocket client.  For example to bind your barnacles instance to your real-time [Pareto](https://getpareto.com) data feed, first create and connect the websocket client, then bind it to barnacles.
-
-```javascript
-var io = require('socket.io-client');
-var PARETO_TOKEN = 'xxx';  // Listed in your Pareto account
-
-process.env.PARETO_TOKEN = PARETO_TOKEN;
-const mysocket = io('https://pareto.reelyactive.com',
-                    { query: { token: PARETO_TOKEN } });
- 
-notifications.bind( { websocket: mysocket } );
-```
-
-The above example requires the [socket.io-client](https://www.npmjs.com/package/socket.io-client) package which is _not_ listed as a dependency.  To use this service, you must manually install the package:
-
-    npm install socket.io-client
-
-
-Options
--------
-
-The following options are supported when instantiating barnacles (those shown are the defaults):
-
-    {
-      httpPort: 3005,
-      useCors: false,
-      delayMilliseconds: 1000,
-      minDelayMilliseconds: 100,
-      historyMilliseconds: 5000,
-      disappearanceMilliseconds: 10000,
-      keepAliveMilliseconds: 5000,
-      enableMasterSocketForwarding: false,
-      includeTiraidInEvent: false,
-      acceptStaleEvents: false,
-      acceptFutureEvents: true
-    }
-
-Notes:
-- delayMilliseconds specifies how long to wait for data to arrive from all possible sources before determining if an event occurred - note that this introduces the given amount of latency
-- minDelayMilliseconds specifies the minimum time between successive batches of event calculations - this can be tweaked to reduce CPU load
-- historyMilliseconds specifies how long to consider historic spatio-temporal data before it is flushed from memory - to avoid the possibility of data being ignored, ensure that _historyMilliseconds = keepAliveMilliseconds_
-- disappearanceMilliseconds specifies how long to wait after the most recent decoding before considering the transmitting device as disappeared and removing the record from memory
-- keepAliveMilliseconds specifies the maximum time between subsequent events for each transmitting device - if no displacement events occur, barnacles will emit a keep-alive notification every given period
-- enableMasterSocketForwarding specifies whether all events are forwarded on the master websocket
-- acceptStaleEvents specifies whether received events with a timestamp further in the past than the disappearanceMilliseconds are discarded (false) or accepted and updated to the current time (true)
-- acceptStaleEvents specifies whether received events with a timestamp in the future are discarded (false) or accepted and updated to the current time (true)
+Also, we hope the name provides occasions to overhear our Québécois colleagues say things like _"Tu veux tu configurer ta barnacle!?!"_
 
 
 What's next?
 ------------
 
-This is an active work in progress.  Expect regular changes and updates, as well as improved documentation!  If you're developing with barnacles check out:
+__barnacles__ v1.0.0 was released in January 2019, superseding all earlier versions, the latest of which remains available in the [release-0.4 branch](https://github.com/reelyactive/barnacles/tree/release-0.4) and as [barnacles@0.4.12 on npm](https://www.npmjs.com/package/barnacles/v/0.4.12).
+
+If you're developing with barnacles check out:
 * [diyActive](https://reelyactive.github.io/) our developer page
 * our [node-style-guide](https://github.com/reelyactive/node-style-guide) for development
-* our [contact information](http://www.reelyactive.com/contact/) to get in touch if you'd like to contribute
+* our [contact information](https://www.reelyactive.com/contact/) to get in touch if you'd like to contribute
 
 
 License
@@ -581,7 +133,7 @@ License
 
 MIT License
 
-Copyright (c) 2014-2017 reelyActive
+Copyright (c) 2014-2019 [reelyActive](https://www.reelyactive.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
