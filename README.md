@@ -79,6 +79,7 @@ __barnacles__ is an EventEmitter which means that software can listen for _'radd
 | Interface package                                                       | Provides |
 |:------------------------------------------------------------------------|:---------|
 | [barnacles-socketio](https://github.com/reelyactive/barnacles-socketio) | socket.io push API |
+| [barnacles-webhook](https://github.com/reelyactive/barnacles-webhook)   | Webhook (event-driven HTTP POST) |
 
 ### Example: socket.io push API
 
@@ -93,6 +94,21 @@ barnowl.addListener(Barnowl, {}, Barnowl.TestListener, {});
 
 // 2: Add the interface with relevant options
 barnacles.addInterface(BarnaclesSocketIO, {});
+```
+
+### Example: Webhook
+
+```javascript
+const Barnowl = require('barnowl');
+const Barnacles = require('barnacles');
+const BarnaclesWebhook = require('barnacles-webhook'); // 1: Include the package
+
+let barnowl = new Barnowl();
+let barnacles = new Barnacles({ barnowl: barnowl });
+barnowl.addListener(Barnowl, {}, Barnowl.TestListener, {});
+
+// 2: Add the interface with relevant options
+barnacles.addInterface(BarnaclesWebhook, { hostname: "127.0.0.1", port: 3000 });
 ```
 
 
