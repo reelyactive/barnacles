@@ -135,6 +135,10 @@ __barnacles__ supports the following options:
 
 | Property              | Default | Description                            | 
 |:----------------------|:--------|:---------------------------------------|
+| delayMilliseconds     | 1000    | How long to wait for data to arrive from all possible sources before determining if an event occurred (introduces the given amount of latency) |
+| minDelayMilliseconds  | 100     | Minimum time to wait between subsequent batches of event computation (gives the CPU a break) |
+| historyMilliseconds   | 5000    | How long to consider historic spatio-temporal data before it is flushed from memory (if historyMilliseconds is less than keepAliveMilliseconds data may be lost) |
+| keepAliveMilliseconds | 5000    | How long to wait before triggering a keep-alive event in the absence of other events for a given transmitter. |
 | barnowl               | null    | barnowl instance providing source data |
 
 
