@@ -139,6 +139,8 @@ __barnacles__ supports the following options:
 | minDelayMilliseconds  | 100     | Minimum time to wait between subsequent batches of event computation (gives the CPU a break) |
 | historyMilliseconds   | 5000    | How long to consider historic spatio-temporal data before it is flushed from memory (if historyMilliseconds is less than keepAliveMilliseconds data may be lost) |
 | keepAliveMilliseconds | 5000    | How long to wait before triggering a keep-alive event in the absence of other events for a given transmitter. |
+| acceptStaleRaddecs    | false   | Accept raddecs with a timestamp more than historyMilliseconds in the past? (timestamp gets adjusted to current time) |
+| acceptFutureRaddecs   | true    | Accept raddecs with a timestamp in the future? (timestamp gets adjusted to current time) |
 | barnowl               | null    | barnowl instance providing source data |
 
 
