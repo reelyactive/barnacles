@@ -80,6 +80,7 @@ __barnacles__ is an EventEmitter which means that software can listen for _'radd
 |:------------------------------------------------------------------------|:---------|
 | [barnacles-socketio](https://github.com/reelyactive/barnacles-socketio) | socket.io push API |
 | [barnacles-webhook](https://github.com/reelyactive/barnacles-webhook)   | Webhook (event-driven HTTP POST) |
+| [barnacles-elasticsearch](https://github.com/reelyactive/barnacles-elasticsearch) | Elasticsearch database interface |
 
 ### Example: socket.io push API
 
@@ -111,6 +112,21 @@ barnowl.addListener(Barnowl, {}, Barnowl.TestListener, {});
 barnacles.addInterface(BarnaclesWebhook, { hostname: "127.0.0.1", port: 3000 });
 ```
 
+### Example: Elasticsearch
+
+```javascript
+const Barnowl = require('barnowl');
+const Barnacles = require('barnacles');
+const BarnaclesElasticsearch = require('barnacles-elasticsearch'); // 1
+
+let barnowl = new Barnowl();
+let barnacles = new Barnacles({ barnowl: barnowl });
+barnowl.addListener(Barnowl, {}, Barnowl.TestListener, {});
+
+// 2: Add the interface with relevant options
+barnacles.addInterface(BarnaclesElasticsearch, { host: "127.0.0.1:9200" });
+```
+
 
 Options
 -------
@@ -119,6 +135,10 @@ __barnacles__ supports the following options:
 
 | Property              | Default | Description                            | 
 |:----------------------|:--------|:---------------------------------------|
+| delayMilliseconds     | 1000    | How long to wait for data to arrive from all possible sources before determining if an event occurred (introduces the given amount of latency) |
+| minDelayMilliseconds  | 100     | Minimum time to wait between subsequent batches of event computation (gives the CPU a break) |
+| historyMilliseconds   | 5000    | How long to consider historic spatio-temporal data before it is flushed from memory (if historyMilliseconds is less than keepAliveMilliseconds data may be lost) |
+| keepAliveMilliseconds | 5000    | How long to wait before triggering a keep-alive event in the absence of other events for a given transmitter. |
 | barnowl               | null    | barnowl instance providing source data |
 
 
