@@ -145,8 +145,8 @@ __barnacles__ supports the following options:
 | acceptStaleRaddecs     | false   | Accept raddecs with a timestamp more than historyMilliseconds in the past? (timestamp gets adjusted to current time) |
 | acceptFutureRaddecs    | true    | Accept raddecs with a timestamp in the future? (timestamp gets adjusted to current time) |
 | barnowl                | null    | barnowl instance providing source data |
-| inputFilterParameters  | {}      | Filter on inbound raddecs (see [raddec-filter](https://github.com/reelyactive/raddec-filter) |
-| outputFilterParameters | {}      | Filter on outbound raddecs (see [raddec-filter](https://github.com/reelyactive/raddec-filter) |
+| inputFilterParameters  | {}      | Filter on inbound raddecs (see [raddec-filter](https://github.com/reelyactive/raddec-filter)) |
+| outputFilterParameters | {}      | Filter on outbound raddecs (see [raddec-filter](https://github.com/reelyactive/raddec-filter)) |
 
 
 ![barnacles logo](https://reelyactive.github.io/barnacles/images/barnacles-bubble.png)
