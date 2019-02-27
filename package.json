@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "raddec": ">=0.2.3",
+    "raddec-filter": ">=0.2.0",
     "nedb": ">=1.8.0"
   },
   "devDependencies": {},
