@@ -12,7 +12,7 @@
     "RTLS",
     "M2M"
   ],
-  "version": "1.0.5",
+  "version": "1.0.6",
   "engines": {
     "node": ">=6.0.0"
   },
@@ -22,7 +22,7 @@
     "url": "https://github.com/reelyactive/barnacles.git"
   },
   "dependencies": {
-    "raddec": ">=0.2.3",
+    "raddec": ">=0.2.5",
     "raddec-filter": ">=0.2.0",
     "nedb": ">=1.8.0"
   },
