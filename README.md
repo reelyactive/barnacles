@@ -16,10 +16,19 @@ __barnacles__ ingests and outputs a real-time stream of [raddec](https://github.
 
 __barnacles__ is a lightweight [Node.js package](https://www.npmjs.com/package/barnacles) that can run on resource-constrained edge devices as well as on powerful cloud servers and anything in between.  It is typically connected with a [barnowl](https://github.com/reelyactive/barnowl/) instance which sources real-time radio decodings from an underlying hardware layer.  Together these packages are core components of [Pareto Anywhere](https://getpareto.com) open source software of the [reelyActive technology platform](https://www.reelyactive.com/technology/).
 
+
 Installation
 ------------
 
     npm install barnacles
+
+
+Quick start
+-----------
+
+    npm start
+
+__barnacles__ will listen for raddec UDP packets on port 50001 and print the aggregated raddec output to the console.
 
 
 Hello barnacles & barnowl
