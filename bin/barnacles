@@ -10,7 +10,13 @@ const RADDEC_PORT = process.env.RADDEC_PORT || 50001;
 let barnacles = new Barnacles();
 
 barnacles.on('raddec', function(raddec) {
+  console.log('\r\nraddec');
   console.log(raddec.toFlattened());
+});
+
+barnacles.on('dynamb', function(dynamb) {
+  console.log('\r\ndynamb');
+  console.log(dynamb);
 });
 
 server.on('message', function(msg) {
