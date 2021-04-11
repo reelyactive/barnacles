@@ -14,12 +14,23 @@ __barnacles__ ingests and outputs a real-time stream of [raddec](https://github.
 - RTLS: _where_ is it relative to the receiving devices?
 - M2M: _how_ is its status, based on any payload included in the packet?
 
+__barnacles__ can be coupled with [advlib](https://github.com/reelyactive/raddec/) packet processors to additionally interpret _dynamb_ (dynamic ambient) and _statid_ (static ID) data for each device.
+
 __barnacles__ is a lightweight [Node.js package](https://www.npmjs.com/package/barnacles) that can run on resource-constrained edge devices as well as on powerful cloud servers and anything in between.  It is typically connected with a [barnowl](https://github.com/reelyactive/barnowl/) instance which sources real-time radio decodings from an underlying hardware layer.  Together these packages are core components of [Pareto Anywhere](https://getpareto.com) open source software of the [reelyActive technology platform](https://www.reelyactive.com/technology/).
+
 
 Installation
 ------------
 
     npm install barnacles
+
+
+Quick start
+-----------
+
+    npm start
+
+__barnacles__ will listen for raddec UDP packets on port 50001 and print the aggregated raddec output to the console.
 
 
 Hello barnacles & barnowl
@@ -146,6 +157,9 @@ __barnacles__ supports the following options:
 | barnowl                | null    | barnowl instance providing source data |
 | inputFilterParameters  | {}      | Filter on inbound raddecs (see [raddec-filter](https://github.com/reelyactive/raddec-filter)) |
 | outputFilterParameters | {}      | Filter on outbound raddecs (see [raddec-filter](https://github.com/reelyactive/raddec-filter)) |
+| packetProcessors       | {}      | Processors for packet data (see [advlib](https://github.com/reelyactive/advlib)) |
+| dynambProperties       | { ... } | Packet properties to include in dynamb events |
+| statidProperties       | { ... } | Packet properties to include as statid |
 
 
 ![barnacles logo](https://reelyactive.github.io/barnacles/images/barnacles-bubble.png)
@@ -175,7 +189,7 @@ License
 
 MIT License
 
-Copyright (c) 2014-2020 [reelyActive](https://www.reelyactive.com)
+Copyright (c) 2014-2021 [reelyActive](https://www.reelyactive.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
