@@ -158,6 +158,7 @@ __barnacles__ supports the following options:
 | inputFilterParameters  | {}      | Filter on inbound raddecs (see [raddec-filter](https://github.com/reelyactive/raddec-filter)) |
 | outputFilterParameters | {}      | Filter on outbound raddecs (see [raddec-filter](https://github.com/reelyactive/raddec-filter)) |
 | packetProcessors       | {}      | Processors for packet data (see [advlib](https://github.com/reelyactive/advlib)) |
+| packetInterpreters     | []    | Interpreters for packet data (see [advlib](https://github.com/reelyactive/advlib)) |
 | dynambProperties       | { ... } | Packet properties to include in dynamb events |
 | statidProperties       | { ... } | Packet properties to include as statid |
 
