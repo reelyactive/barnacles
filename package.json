@@ -12,7 +12,7 @@
     "RTLS",
     "M2M"
   ],
-  "version": "1.3.2",
+  "version": "1.3.3",
   "engines": {
     "node": ">=6.0.0"
   },
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "advlib": "^1.1.0",
-    "raddec": "^0.2.7",
+    "raddec": "^0.2.8",
     "raddec-filter": ">=0.2.0"
   },
   "devDependencies": {},
