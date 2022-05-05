@@ -5,12 +5,13 @@
     "name": "reelyActive",
     "email": "info@reelyactive.com"
   },
-  "description": "Real-time location and sensor data aggregator and propagator.  We believe in an open Internet of Things.",
+  "description": "Efficient data aggregator/distributor for RFID, RTLS and M2M, enabling context-aware physical spaces.  We believe in an open Internet of Things.",
   "keywords": [
     "reelyActive",
     "IoT",
     "RTLS",
-    "M2M"
+    "M2M",
+    "raddec"
   ],
   "version": "1.3.7",
   "engines": {
