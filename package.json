@@ -20,7 +20,9 @@
   },
   "main": "./lib/barnacles.js",
   "scripts": {
-    "start": "node bin/barnacles"
+    "start": "node bin/barnacles",
+    "display-dynamb": "node bin/barnacles-dynamb",
+    "display-relay": "node bin/barnacles-relay"
   },
   "repository": {
     "type": "git",
