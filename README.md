@@ -14,7 +14,7 @@ __barnacles__ ingests and outputs a real-time stream of [raddec](https://github.
 - RTLS: _where_ is it relative to the receiving devices?
 - M2M: _how_ is its status, based on any payload included in the packet?
 
-__barnacles__ can be coupled with [advlib](https://github.com/reelyactive/raddec/) packet processors to additionally interpret _dynamb_ (dynamic ambient) and _statid_ (static ID) data for each device.
+__barnacles__ can be coupled with [advlib](https://github.com/reelyactive/raddec/) packet processors to additionally interpret _dynamb_ (dynamic ambient), _statid_ (static ID) and _relay_ data for each device.
 
 __barnacles__ is a lightweight [Node.js package](https://www.npmjs.com/package/barnacles) that can run on resource-constrained edge devices as well as on powerful cloud servers and anything in between.  It is typically connected with a [barnowl](https://github.com/reelyactive/barnowl/) instance which sources real-time radio decodings from an underlying hardware layer.  Together these packages are core components of [Pareto Anywhere](https://getpareto.com) open source software of the [reelyActive technology platform](https://www.reelyactive.com/technology/).
 
@@ -79,6 +79,27 @@ C'est-tu tout que ta barnacles peut faire?
 The silly Québécois title aside (we couldn't resist the temptation), although __barnacles__ and __barnowl__ together may suffice for simple event-driven applications, functionality can be greatly extended with the following software packages:
 - [advlib](https://github.com/reelyactive/advlib) to decode the individual packets from hexadecimal strings into JSON
 - [chickadee](https://github.com/reelyactive/chickadee) to associate structured, linked data with the devices identified in the radio decodings
+
+
+How to decode packets?
+----------------------
+
+__barnacles__ can accept packet processors, libraries and interpreters to decode raw packet data and trigger events in consequence.  For instance, instantiate __barnacles__ with all of the __advlib__ modules as follows:
+
+```javascript
+let options = {
+    packetProcessors: [ { processor: require('advlib-ble'),
+                          libraries: [ require('advlib-ble-services'),
+                                       require('advlib-ble-manufacturers') ],
+                          options: { ignoreProtocolOverhead: true,
+                                     indices: [ require('sniffypedia') ] } } ],
+    packetInterpreters: [ require('advlib-interoperable') ]
+};
+
+let barnacles = new Barnacles(options);
+```
+
+Packet decoding is a prerequisite for _dynamb_ and _relay_ events and _statid_ data.
 
 
 How to distribute data?
