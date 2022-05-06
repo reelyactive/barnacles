@@ -81,6 +81,27 @@ The silly Québécois title aside (we couldn't resist the temptation), although 
 - [chickadee](https://github.com/reelyactive/chickadee) to associate structured, linked data with the devices identified in the radio decodings
 
 
+How to decode packets?
+----------------------
+
+__barnacles__ can accept packet processors, libraries and interpreters to decode raw packet data and trigger events in consequence.  For instance, instantiate __barnacles__ with all of the __advlib__ modules as follows:
+
+```javascript
+let options = {
+    packetProcessors: [ { processor: require('advlib-ble'),
+                          libraries: [ require('advlib-ble-services'),
+                                       require('advlib-ble-manufacturers') ],
+                          options: { ignoreProtocolOverhead: true,
+                                     indices: [ require('sniffypedia') ] } } ],
+    packetInterpreters: [ require('advlib-interoperable') ]
+};
+
+let barnacles = new Barnacles(options);
+```
+
+Packet decoding is a prerequisite for _dynamb_ and _relay_ events and _statid_ data.
+
+
 How to distribute data?
 -----------------------
 
