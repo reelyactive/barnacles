@@ -112,6 +112,9 @@ __barnacles__ is an EventEmitter which means that software can listen for _'radd
 | [barnacles-socketio](https://github.com/reelyactive/barnacles-socketio) | socket.io push API |
 | [barnacles-webhook](https://github.com/reelyactive/barnacles-webhook)   | Webhook (event-driven HTTP POST) |
 | [barnacles-elasticsearch](https://github.com/reelyactive/barnacles-elasticsearch) | Elasticsearch database interface |
+| [barnacles-logfile](https://github.com/reelyactive/barnacles-logfile) | Write raddec & dynamb events to a local logfile |
+| [barnacles-agora](https://github.com/reelyactive/barnacles-agora) | Agora Software interface |
+| [barnacles-wiliot](https://github.com/reelyactive/barnacles-wiliot) | Relay IoT Pixel payloads to the Wiliot Cloud |
 
 ### Example: socket.io push API
 
