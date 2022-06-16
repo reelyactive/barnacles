@@ -175,6 +175,7 @@ __barnacles__ supports the following options:
 | packetCompilationMilliseconds    | 5000 | On an event, combine packets from raddecs up to this far in the past |
 | historyMilliseconds    | 8000    | How long to consider historic spatio-temporal data before it is flushed from memory (if historyMilliseconds is less than keepAliveMilliseconds data may be lost) |
 | keepAliveMilliseconds  | 5000    | How long to wait before triggering a keep-alive event in the absence of other events for a given transmitter. |
+| disappearanceMilliseconds        | 15000 | How long to wait before a device is considered to have disappeared (and also how long to retain dynamb data). |
 | observedEvents         | [ 0, 1, 2, 3 ] | Index list of the event types to emit |
 | acceptStaleRaddecs     | false   | Accept raddecs with a timestamp more than historyMilliseconds in the past? (timestamp gets adjusted to current time) |
 | acceptFutureRaddecs    | true    | Accept raddecs with a timestamp in the future? (timestamp gets adjusted to current time) |
