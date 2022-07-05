@@ -99,7 +99,7 @@ let options = {
 let barnacles = new Barnacles(options);
 ```
 
-Packet decoding is a prerequisite for _dynamb_ and _relay_ events and _statid_ data.
+Packet decoding is a prerequisite for _dynamb_ and _relay_ events and _statid_ data, with the exception of Electronic Product Code (EPC) data which is automatically decoded as _statid_ data by __barnacles__ using [advlib-epc](https://github.com/reelyactive/advlib-epc).
 
 
 How to distribute data?
