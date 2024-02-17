@@ -7,7 +7,7 @@ Efficient data aggregator/distributor for RFID, RTLS and M2M
 
 __barnacles__ aggregates a real-time stream of radio decodings.  Based on changes in packet data (M2M) or location (RTLS) for each device, __barnacles__ produces an event.  The compressed radio decoding data can then be distributed over a network or consumed locally, as required.
 
-![barnacles overview](https://reelyactive.github.io/barnacles/images/barnacles-overview.png)
+![Overview of barnacles](https://reelyactive.github.io/barnacles/images/overview.png)
 
 __barnacles__ ingests and outputs a real-time stream of [raddec](https://github.com/reelyactive/raddec/) objects which facilitate any and all of the following applications:
 - RFID: _what_ is present, based on the device identifier?
