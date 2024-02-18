@@ -5,7 +5,7 @@ __barnacles__ processes a real-time stream of ambient RF decodings into an effic
 
 ![Overview of barnacles](https://reelyactive.github.io/barnacles/images/overview.png)
 
-__barnacles__ ingests and outputs a real-time stream of [raddec](https://github.com/reelyactive/raddec/) objects, and can be coupled with [advlib](https://github.com/reelyactive/raddec/) packet processors to additionally interpret _dynamb_ (dynamic ambient), _statid_ (static ID) and _relay_ data for each device.
+__barnacles__ ingests and outputs a real-time stream of [raddec](https://github.com/reelyactive/raddec/) objects, and can be coupled with [advlib](https://github.com/reelyactive/advlib/) packet processors to additionally interpret _dynamb_ (dynamic ambient), _statid_ (static ID) and _relay_ data for each device.
 
 __barnacles__ is a lightweight [Node.js package](https://www.npmjs.com/package/barnacles) that can run on resource-constrained edge devices as well as on powerful cloud servers and anything in between.  It is included in reelyActive's [Pareto Anywhere](https://www.reelyactive.com/pareto/anywhere/) open source IoT middleware suite where it maintains an in-memory snapshot of the [hyperlocal context](https://www.reelyactive.com/context/) data structure for consumption by API modules, and distribution by [barnacles-x modules](#how-to-distribute-data).
 
@@ -107,7 +107,6 @@ __barnacles__ is an EventEmitter which means that software can listen for _'radd
 
 | Interface package                                                       | Provides |
 |:------------------------------------------------------------------------|:---------|
-
 | [barnacles-webhook](https://github.com/reelyactive/barnacles-webhook)   | Webhook (event-driven HTTP POST) |
 | [barnacles-websocket](https://github.com/reelyactive/barnacles-websocket) | WebSocket server |
 | [barnacles-socketio](https://github.com/reelyactive/barnacles-socketio) | socket.io push API |
