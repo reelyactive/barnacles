@@ -1,32 +1,29 @@
 barnacles
 =========
 
-
-Efficient data aggregator/distributor for RFID, RTLS and M2M
-------------------------------------------------------------
-
-__barnacles__ aggregates a real-time stream of radio decodings.  Based on changes in packet data (M2M) or location (RTLS) for each device, __barnacles__ produces an event.  The compressed radio decoding data can then be distributed over a network or consumed locally, as required.
+__barnacles__ processes a real-time stream of ambient RF decodings into an efficient representation of "_what_ is _where_ and _how_" as standard developer-friendly JSON that is vendor/technology/application-agnostic.
 
 ![Overview of barnacles](https://reelyactive.github.io/barnacles/images/overview.png)
 
-__barnacles__ ingests and outputs a real-time stream of [raddec](https://github.com/reelyactive/raddec/) objects which facilitate any and all of the following applications:
-- RFID: _what_ is present, based on the device identifier?
-- RTLS: _where_ is it relative to the receiving devices?
-- M2M: _how_ is its status, based on any payload included in the packet?
+__barnacles__ ingests and outputs a real-time stream of [raddec](https://github.com/reelyactive/raddec/) objects, and can be coupled with [advlib](https://github.com/reelyactive/raddec/) packet processors to additionally interpret _dynamb_ (dynamic ambient), _statid_ (static ID) and _relay_ data for each device.
 
-__barnacles__ can be coupled with [advlib](https://github.com/reelyactive/raddec/) packet processors to additionally interpret _dynamb_ (dynamic ambient), _statid_ (static ID) and _relay_ data for each device.
-
-__barnacles__ is a lightweight [Node.js package](https://www.npmjs.com/package/barnacles) that can run on resource-constrained edge devices as well as on powerful cloud servers and anything in between.  It is typically connected with a [barnowl](https://github.com/reelyactive/barnowl/) instance which sources real-time radio decodings from an underlying hardware layer.  Together these packages are core components of [Pareto Anywhere](https://getpareto.com) open source software of the [reelyActive technology platform](https://www.reelyactive.com/technology/).
+__barnacles__ is a lightweight [Node.js package](https://www.npmjs.com/package/barnacles) that can run on resource-constrained edge devices as well as on powerful cloud servers and anything in between.  It is included in reelyActive's [Pareto Anywhere](https://www.reelyactive.com/pareto/anywhere/) open source IoT middleware suite where it maintains an in-memory snapshot of the [hyperlocal context](https://www.reelyactive.com/context/) data structure for consumption by API modules, and distribution by [barnacles-x modules](#how-to-distribute-data).
 
 
-Installation
-------------
+Getting Started
+---------------
 
-    npm install barnacles
+Follow our step-by-step tutorials to get started with __Pareto Anywhere__, which includes __barnacles__, on the platform of your choice:
+- [reelyActive Developers](https://reelyactive.github.io/)
+
+Learn "owl" about the __raddec__ and __dynamb__ JSON data output:
+-  [reelyActive Developer's Cheatsheet](https://reelyactive.github.io/diy/cheatsheet/)
 
 
 Quick start
 -----------
+
+Clone this repository, install package dependencies with `npm install`, and then from the root folder run at any time:
 
     npm start
 
@@ -44,7 +41,7 @@ let barnowl = new Barnowl();
 barnowl.addListener(Barnowl, {}, Barnowl.TestListener, {}); // Source of data
 
 let barnacles = new Barnacles({ barnowl: barnowl });
-barnacles.on('raddec', function(raddec) {
+barnacles.on('raddec', (raddec) => {
   console.log(raddec);
 });
 ```
@@ -78,7 +75,8 @@ C'est-tu tout que ta barnacles peut faire?
 
 The silly Québécois title aside (we couldn't resist the temptation), although __barnacles__ and __barnowl__ together may suffice for simple event-driven applications, functionality can be greatly extended with the following software packages:
 - [advlib](https://github.com/reelyactive/advlib) to decode the individual packets from hexadecimal strings into JSON
-- [chickadee](https://github.com/reelyactive/chickadee) to associate structured, linked data with the devices identified in the radio decodings
+- [chickadee](https://github.com/reelyactive/chickadee) to provide a /context API by associating structured, linked data with the devices identified in the radio decodings
+- [barterer](https://github.com/reelyactive/barterer) to provide a /devices API
 
 
 How to decode packets?
@@ -109,10 +107,13 @@ __barnacles__ is an EventEmitter which means that software can listen for _'radd
 
 | Interface package                                                       | Provides |
 |:------------------------------------------------------------------------|:---------|
-| [barnacles-socketio](https://github.com/reelyactive/barnacles-socketio) | socket.io push API |
+
 | [barnacles-webhook](https://github.com/reelyactive/barnacles-webhook)   | Webhook (event-driven HTTP POST) |
+| [barnacles-websocket](https://github.com/reelyactive/barnacles-websocket) | WebSocket server |
+| [barnacles-socketio](https://github.com/reelyactive/barnacles-socketio) | socket.io push API |
+| [barnacles-logfile](https://github.com/reelyactive/barnacles-logfile)   | Write raddec & dynamb events to a local logfile |
+| [barnacles-influxdb2](https://github.com/reelyactive/barnacles-influxdb2) | InfluxDB 2 database interface |
 | [barnacles-elasticsearch](https://github.com/reelyactive/barnacles-elasticsearch) | Elasticsearch database interface |
-| [barnacles-logfile](https://github.com/reelyactive/barnacles-logfile) | Write raddec & dynamb events to a local logfile |
 | [barnacles-agora](https://github.com/reelyactive/barnacles-agora) | Agora Software interface |
 | [barnacles-wiliot](https://github.com/reelyactive/barnacles-wiliot) | Relay IoT Pixel payloads to the Wiliot Cloud |
 
