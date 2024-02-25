@@ -5,7 +5,7 @@
     "name": "reelyActive",
     "email": "info@reelyactive.com"
   },
-  "description": "Efficient data aggregator/distributor for RFID, RTLS and M2M, enabling context-aware physical spaces.  We believe in an open Internet of Things.",
+  "description": "Efficient processor of ambient RF decodings enabling real-time hyperlocal context.  We believe in an open Internet of Things.",
   "keywords": [
     "reelyActive",
     "IoT",
@@ -14,7 +14,7 @@
     "raddec",
     "dynamb"
   ],
-  "version": "1.5.8",
+  "version": "1.6.0",
   "engines": {
     "node": ">=6.0.0"
   },
@@ -29,7 +29,7 @@
     "url": "https://github.com/reelyactive/barnacles.git"
   },
   "dependencies": {
-    "advlib": "^1.3.3",
+    "advlib": "^1.3.4",
     "advlib-epc": "^0.1.0",
     "raddec": "^0.5.0",
     "raddec-filter": ">=0.4.0"
