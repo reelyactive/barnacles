@@ -205,6 +205,19 @@ Project History
 __barnacles__ v1.0.0 was released in January 2019, superseding all earlier versions, the latest of which remains available in the [release-0.4 branch](https://github.com/reelyactive/barnacles/tree/release-0.4) and as [barnacles@0.4.12 on npm](https://www.npmjs.com/package/barnacles/v/0.4.12).
 
 
+Modular Architecture
+--------------------
+
+__barnacles__ is easily combined with the following complementary software modules:
+- [barnowl](https://github.com/reelyactive/barnowl)
+- [barterer](https://github.com/reelyactive/barterer)
+- [chickadee](https://github.com/reelyactive/chickadee)
+- [chimps](https://github.com/reelyactive/chimps)
+- [advlib](https://github.com/reelyactive/advlib)
+
+Learn more about the [reelyActive Open Source Software packages](https://reelyactive.github.io/diy/oss-packages/), all of which are bundled together as [Pareto Anywhere](https://github.com/reelyactive/pareto-anywhere) open source IoT middleware.
+
+
 Contributing
 ------------
 
