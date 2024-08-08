@@ -182,8 +182,9 @@ __barnacles__ supports the following options:
 | barnowl                | null    | barnowl instance providing source data |
 | inputFilterParameters  | {}      | Filter on inbound raddecs (see [raddec-filter](https://github.com/reelyactive/raddec-filter)) |
 | outputFilterParameters | {}      | Filter on outbound raddecs (see [raddec-filter](https://github.com/reelyactive/raddec-filter)) |
-| packetProcessors       | {}      | Processors for packet data (see [advlib](https://github.com/reelyactive/advlib)) |
+| packetProcessors       | []      | Processors for packet data (see [advlib](https://github.com/reelyactive/advlib)) |
 | packetInterpreters     | []    | Interpreters for packet data (see [advlib](https://github.com/reelyactive/advlib)) |
+| protocolSpecificDataProcessors | [] | Processors for protocol-specific data (see [advlib](https://github.com/reelyactive/advlib)) |
 | dynambProperties       | { ... } | Packet properties to include in dynamb events |
 | statidProperties       | { ... } | Packet properties to include as statid |
 
