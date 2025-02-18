@@ -14,7 +14,8 @@ Getting Started
 ---------------
 
 Follow our step-by-step tutorials to get started with __Pareto Anywhere__, which includes __barnacles__, on the platform of your choice:
-- [reelyActive Developers](https://reelyactive.github.io/)
+- [Run Pareto Anywhere on a personal computer](https://reelyactive.github.io/diy/pareto-anywhere-pc/)
+- [Run Pareto Anywhere on a Raspberry Pi](https://reelyactive.github.io/diy/pareto-anywhere-pi/)
 
 Learn "owl" about the __raddec__ and __dynamb__ JSON data output:
 -  [reelyActive Developer's Cheatsheet](https://reelyactive.github.io/diy/cheatsheet/)
