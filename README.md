@@ -14,7 +14,8 @@ Getting Started
 ---------------
 
 Follow our step-by-step tutorials to get started with __Pareto Anywhere__, which includes __barnacles__, on the platform of your choice:
-- [reelyActive Developers](https://reelyactive.github.io/)
+- [Run Pareto Anywhere on a personal computer](https://reelyactive.github.io/diy/pareto-anywhere-pc/)
+- [Run Pareto Anywhere on a Raspberry Pi](https://reelyactive.github.io/diy/pareto-anywhere-pi/)
 
 Learn "owl" about the __raddec__ and __dynamb__ JSON data output:
 -  [reelyActive Developer's Cheatsheet](https://reelyactive.github.io/diy/cheatsheet/)
@@ -105,16 +106,22 @@ How to distribute data?
 
 __barnacles__ is an EventEmitter which means that software can listen for _'raddec'_ events.  To facilitate distribution over a network, __barnacles__ interfaces with a number of complementary software packages to keep the code as lightweight and modular as possible.  The following table lists all these interface packages which integrate seamlessly with __barnacles__ in just two lines of code.
 
-| Interface package                                                       | Provides |
-|:------------------------------------------------------------------------|:---------|
-| [barnacles-webhook](https://github.com/reelyactive/barnacles-webhook)   | Webhook (event-driven HTTP POST) |
+| Interface package                                                | Provides |
+|:-----------------------------------------------------------------|:---------|
+| [barnacles-webhook](https://github.com/reelyactive/barnacles-webhook) | Webhook (event-driven HTTP POST) |
 | [barnacles-websocket](https://github.com/reelyactive/barnacles-websocket) | WebSocket server |
 | [barnacles-socketio](https://github.com/reelyactive/barnacles-socketio) | socket.io push API |
-| [barnacles-logfile](https://github.com/reelyactive/barnacles-logfile)   | Write raddec & dynamb events to a local logfile |
+| [barnacles-mqtt](https://github.com/reelyactive/barnacles-mqtt) | MQTT |
+| [barnacles-sparkplug](https://github.com/reelyactive/barnacles-sparkplug) | Sparkplug (MQTT) |
+| [barnacles-opcua](https://github.com/reelyactive/barnacles-opcua) | OPC-UA |
+| [barnacles-logfile](https://github.com/reelyactive/barnacles-logfile) | Write raddec & dynamb events to a local logfile |
 | [barnacles-influxdb2](https://github.com/reelyactive/barnacles-influxdb2) | InfluxDB 2 database interface |
 | [barnacles-elasticsearch](https://github.com/reelyactive/barnacles-elasticsearch) | Elasticsearch database interface |
+| [barnacles-tds](https://github.com/reelyactive/barnacles-tds) | SQL Server (Tabular Data Stream) |
 | [barnacles-agora](https://github.com/reelyactive/barnacles-agora) | Agora Software interface |
 | [barnacles-wiliot](https://github.com/reelyactive/barnacles-wiliot) | Relay IoT Pixel payloads to the Wiliot Cloud |
+
+See our [Create a Pareto Anywhere startup script](https://reelyactive.github.io/diy/pareto-anywhere-startup-script/) tutorial for detailed instructions on including any of the above interface packages with a [pareto-anywhere](https://github.com/reelyactive/pareto-anywhere) deployment, or consult the examples below for a standalone __barnacles__ deployment.
 
 ### Example: socket.io push API
 
@@ -236,7 +243,7 @@ License
 
 MIT License
 
-Copyright (c) 2014-2024 [reelyActive](https://www.reelyactive.com)
+Copyright (c) 2014-2025 [reelyActive](https://www.reelyactive.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
