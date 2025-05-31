@@ -14,7 +14,7 @@
     "raddec",
     "dynamb"
   ],
-  "version": "1.7.4",
+  "version": "1.7.5",
   "engines": {
     "node": ">=6.0.0"
   },
@@ -29,7 +29,7 @@
     "url": "https://github.com/reelyactive/barnacles.git"
   },
   "dependencies": {
-    "advlib": "^1.3.7",
+    "advlib": "^1.3.8",
     "advlib-epc": "^0.1.0",
     "raddec": "^0.6.1",
     "raddec-filter": ">=0.4.0"
