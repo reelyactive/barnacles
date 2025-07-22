@@ -14,7 +14,7 @@
     "raddec",
     "dynamb"
   ],
-  "version": "1.7.5",
+  "version": "1.7.6",
   "engines": {
     "node": ">=6.0.0"
   },
@@ -32,7 +32,7 @@
     "advlib": "^1.3.8",
     "advlib-epc": "^0.1.0",
     "raddec": "^0.6.1",
-    "raddec-filter": ">=0.4.0"
+    "raddec-filter": "^1.0.1"
   },
   "devDependencies": {},
   "bugs": {
