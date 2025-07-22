@@ -115,6 +115,7 @@ __barnacles__ is an EventEmitter which means that software can listen for _'radd
 | [barnacles-sparkplug](https://github.com/reelyactive/barnacles-sparkplug) | Sparkplug (MQTT) |
 | [barnacles-opcua](https://github.com/reelyactive/barnacles-opcua) | OPC-UA |
 | [barnacles-logfile](https://github.com/reelyactive/barnacles-logfile) | Write raddec & dynamb events to a local logfile |
+| [barnacles-postgres](https://github.com/reelyactive/barnacles-postgres) | PostgreSQL database interface |
 | [barnacles-influxdb2](https://github.com/reelyactive/barnacles-influxdb2) | InfluxDB 2 database interface |
 | [barnacles-elasticsearch](https://github.com/reelyactive/barnacles-elasticsearch) | Elasticsearch database interface |
 | [barnacles-tds](https://github.com/reelyactive/barnacles-tds) | SQL Server (Tabular Data Stream) |
