@@ -104,7 +104,7 @@ Packet decoding is a prerequisite for _dynamb_ and _relay_ events and _statid_ d
 How to distribute data?
 -----------------------
 
-__barnacles__ is an EventEmitter which means that software can listen for _'raddec'_ events.  To facilitate distribution over a network, __barnacles__ interfaces with a number of complementary software packages to keep the code as lightweight and modular as possible.  The following table lists all these interface packages which integrate seamlessly with __barnacles__ in just two lines of code.
+__barnacles__ is an EventEmitter which means that software can listen for _raddec_, _dynamb_ and _relay_ events.  To facilitate distribution over a network, __barnacles__ interfaces with a number of complementary software packages to keep the code as lightweight and modular as possible.  The following table lists all these interface packages which integrate seamlessly with __barnacles__ in just two lines of code.
 
 | Interface package                                                | Provides |
 |:-----------------------------------------------------------------|:---------|

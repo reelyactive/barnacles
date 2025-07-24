@@ -14,7 +14,7 @@
     "raddec",
     "dynamb"
   ],
-  "version": "1.7.6",
+  "version": "1.7.7",
   "engines": {
     "node": ">=6.0.0"
   },
