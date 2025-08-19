@@ -45,6 +45,9 @@ let barnacles = new Barnacles({ barnowl: barnowl });
 barnacles.on('raddec', (raddec) => {
   console.log(raddec);
 });
+barnacles.on('dynamb', (dynamb) => {
+  console.log(dynamb);
+});
 ```
 
 As output you should see a stream of [raddec](https://github.com/reelyactive/raddec/) objects similar to the following:
@@ -65,6 +68,18 @@ As output you should see a stream of [raddec](https://github.com/reelyactive/rad
   packets: [ "061b55443322110002010611074449555520657669746341796c656572" ],
   timestamp: 1547693457133,
   events: [ 0 ]
+}
+```
+
+As well as [dynamb](https://reelyactive.github.io/diy/cheatsheet/#dynamb) objects similar to the following:
+
+```javascript
+{
+  deviceId: "001bc50940810000",
+  deviceIdType: 1,
+  numberOfReceivedDevices: 42,
+  numberOfStrongestReceivedDevices: 21,
+  timestamp: 1547693457133
 }
 ```
 
