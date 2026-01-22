@@ -5,7 +5,7 @@
     "name": "reelyActive",
     "email": "info@reelyactive.com"
   },
-  "description": "Efficient processor of ambient RF decodings enabling real-time hyperlocal context.  We believe in an open Internet of Things.",
+  "description": "Efficient real-time processor of ambient IoT data, enabling hyperlocal context as standard JSON.  We believe in an open Internet of Things.",
   "keywords": [
     "reelyActive",
     "IoT",
@@ -14,7 +14,7 @@
     "raddec",
     "dynamb"
   ],
-  "version": "1.8.3",
+  "version": "1.9.0",
   "engines": {
     "node": ">=6.0.0"
   },
@@ -22,7 +22,8 @@
   "scripts": {
     "start": "node bin/barnacles",
     "display-dynamb": "node bin/barnacles-dynamb",
-    "display-relay": "node bin/barnacles-relay"
+    "display-relay": "node bin/barnacles-relay",
+    "display-encrypted": "node bin/barnacles-encrypted"
   },
   "repository": {
     "type": "git",
