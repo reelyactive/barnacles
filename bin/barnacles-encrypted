@@ -1,0 +1,47 @@
+#!/usr/bin/env node
+
+const dgram = require('dgram');
+const server = dgram.createSocket('udp4');
+const Raddec = require('raddec');
+const Barnacles = require('../lib/barnacles.js');
+
+console.log('******************************************************');
+console.log('If required, manually install dependencies as follows:');
+console.log('  npm install advlib-ble');
+console.log('  npm install advlib-ble-services');
+console.log('  npm install advlib-ble-manufacturers');
+console.log('  npm install advlib-interoperable');
+console.log('  npm install sniffypedia');
+console.log('******************************************************\r\n');
+
+const RADDEC_PORT = process.env.RADDEC_PORT || 50001;
+const OPTIONS = {
+    packetProcessors: [ { processor: require('advlib-ble'),
+                          libraries: [ require('advlib-ble-services'),
+                                       require('advlib-ble-manufacturers') ],
+                          options: { ignoreProtocolOverhead: true,
+                                     indices: [ require('sniffypedia') ] } } ],
+    packetInterpreters: [ require('advlib-interoperable') ]
+};
+
+let barnacles = new Barnacles(OPTIONS);
+
+barnacles.on('encrypted', function(encrypted) {
+  console.log('\r\nencrypted');
+  console.log(encrypted);
+});
+
+server.on('message', function(msg) {
+  try {
+    let raddec = new Raddec(msg);
+
+    if(raddec !== null) {
+      barnacles.handleRaddec(raddec);
+    }
+  }
+  catch(error) {};
+});
+
+server.bind(50001);
+
+console.log('barnacles instance is listening for raddecs on port', RADDEC_PORT);

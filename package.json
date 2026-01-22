@@ -22,7 +22,8 @@
   "scripts": {
     "start": "node bin/barnacles",
     "display-dynamb": "node bin/barnacles-dynamb",
-    "display-relay": "node bin/barnacles-relay"
+    "display-relay": "node bin/barnacles-relay",
+    "display-encrypted": "node bin/barnacles-encrypted"
   },
   "repository": {
     "type": "git",

@@ -42,12 +42,10 @@ let barnowl = new Barnowl();
 barnowl.addListener(Barnowl, {}, Barnowl.TestListener, {}); // Source of data
 
 let barnacles = new Barnacles({ barnowl: barnowl });
-barnacles.on('raddec', (raddec) => {
-  console.log(raddec);
-});
-barnacles.on('dynamb', (dynamb) => {
-  console.log(dynamb);
-});
+barnacles.on('raddec', (raddec) => { console.log(raddec); });
+barnacles.on('dynamb', (dynamb) => { console.log(dynamb); });
+barnacles.on('relay', (relay) => { console.log(relay); });
+barnacles.on('encrypted', (encrypted) => { console.log(encrypted); });
 ```
 
 As output you should see a stream of [raddec](https://github.com/reelyactive/raddec/) objects similar to the following:
@@ -119,7 +117,7 @@ Packet decoding is a prerequisite for _dynamb_ and _relay_ events and _statid_ d
 How to distribute data?
 -----------------------
 
-__barnacles__ is an EventEmitter which means that software can listen for _raddec_, _dynamb_ and _relay_ events.  To facilitate distribution over a network, __barnacles__ interfaces with a number of complementary software packages to keep the code as lightweight and modular as possible.  The following table lists all these interface packages which integrate seamlessly with __barnacles__ in just two lines of code.
+__barnacles__ is an EventEmitter which means that software can listen for _raddec_, _dynamb_, _relay_ and _encrypted_ events.  To facilitate distribution over a network, __barnacles__ interfaces with a number of complementary software packages to keep the code as lightweight and modular as possible.  The following table lists all these interface packages which integrate seamlessly with __barnacles__ in just two lines of code.
 
 | Interface package                                                | Provides |
 |:-----------------------------------------------------------------|:---------|
